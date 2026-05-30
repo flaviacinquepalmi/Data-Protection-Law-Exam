@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GDPR & Cybersecurity Academy 🛡️</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+  --bg: #0a0a0f;
+  --surface: #13131a;
+  --surface2: #1c1c27;
+  --border: #2a2a3d;
+  --accent: #6c63ff;
+  --accent2: #ff6584;
+  --accent3: #43e97b;
+  --accent4: #f7971e;
+  --text: #e8e8f0;
+  --text2: #9090a8;
+  --gold: #ffd700;
+  --danger: #ff4757;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Animated bg */
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background: radial-gradient(ellipse at 20% 20%, rgba(108,99,255,0.08) 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 80%, rgba(255,101,132,0.06) 0%, transparent 50%);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ===== NAV ===== */
+#nav {
+  position:fixed;top:0;left:0;right:0;
+  background: rgba(10,10,15,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;
+  height:64px;
+}
+
+#nav .logo {
+  font-family:'Syne',sans-serif;
+  font-size:1.3rem;font-weight:800;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+
+#nav .nav-pills {
+  display:flex;gap:4px;
+}
+
+.nav-pill {
+  padding:8px 16px;
+  border-radius:20px;
+  border:none;
+  background:transparent;
+  color:var(--text2);
+  cursor:pointer;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.85rem;font-weight:600;
+  transition:all .2s;
+  display:flex;align-items:center;gap:6px;
+}
+.nav-pill:hover, .nav-pill.active {
+  background:var(--surface2);
+  color:var(--text);
+}
+.nav-pill.active { color:var(--accent); }
+
+#xp-bar {
+  display:flex;align-items:center;gap:10px;
+  font-size:.85rem;
+}
+#xp-bar .level-badge {
+  background: linear-gradient(135deg,var(--accent),var(--accent2));
+  padding:4px 12px;border-radius:20px;
+  font-weight:700;font-size:.8rem;
+}
+.xp-track {
+  width:120px;height:8px;
+  background:var(--border);border-radius:4px;overflow:hidden;
+}
+.xp-fill {
+  height:100%;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  border-radius:4px;
+  transition:width .5s ease;
+}
+
+/* ===== PAGES ===== */
+.page { display:none; padding-top:80px; min-height:100vh; }
+.page.active { display:block; }
+
+/* ===== HOME ===== */
+#home {
+  padding-top:80px;
+  display:none;
+}
+#home.active { display:block; }
+
+.hero {
+  text-align:center;
+  padding:60px 24px 40px;
+}
+.hero h1 {
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2.5rem,6vw,4.5rem);
+  font-weight:800;
+  line-height:1.1;
+  margin-bottom:16px;
+}
+.hero h1 span {
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero p { color:var(--text2);font-size:1.1rem;max-width:600px;margin:0 auto 40px; }
+
+.stats-row {
+  display:flex;justify-content:center;gap:24px;flex-wrap:wrap;
+  margin-bottom:60px;padding:0 24px;
+}
+.stat-card {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:20px 28px;
+  text-align:center;
+  min-width:130px;
+}
+.stat-card .num {
+  font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;
+  background:linear-gradient(135deg,var(--accent3),#00c6ff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.stat-card .lbl { color:var(--text2);font-size:.8rem;margin-top:4px; }
+
+.chapters-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:16px;
+  padding:0 24px 60px;
+  max-width:1400px;margin:0 auto;
+}
+
+.chapter-card {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:24px;
+  cursor:pointer;
+  transition:all .25s;
+  position:relative;overflow:hidden;
+}
+.chapter-card::before {
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  opacity:0;transition:opacity .25s;border-radius:16px;
+}
+.chapter-card:hover { transform:translateY(-4px);border-color:var(--accent); }
+.chapter-card:hover::before { opacity:.06; }
+
+.chapter-card .ch-num {
+  font-family:'JetBrains Mono',monospace;
+  font-size:.75rem;color:var(--accent);
+  margin-bottom:8px;letter-spacing:2px;
+  text-transform:uppercase;
+}
+.chapter-card h3 {
+  font-size:1rem;font-weight:700;margin-bottom:8px;
+  position:relative;z-index:1;
+}
+.chapter-card p {
+  font-size:.82rem;color:var(--text2);
+  position:relative;z-index:1;
+  line-height:1.5;
+}
+.chapter-card .ch-footer {
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:16px;
+  position:relative;z-index:1;
+}
+.ch-xp {
+  font-size:.75rem;font-weight:600;
+  color:var(--accent4);
+  display:flex;align-items:center;gap:4px;
+}
+.ch-arrow {
+  width:32px;height:32px;border-radius:50%;
+  background:var(--surface2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;transition:all .2s;
+}
+.chapter-card:hover .ch-arrow {
+  background:var(--accent);transform:translateX(4px);
+}
+.ch-progress {
+  margin-top:12px;height:3px;background:var(--border);border-radius:2px;
+  position:relative;z-index:1;
+}
+.ch-progress-fill {
+  height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));
+  border-radius:2px;transition:width .5s;
+}
+
+/* ===== CHAPTER DETAIL ===== */
+#chapter-detail { padding-top:80px;display:none; }
+#chapter-detail.active { display:block; }
+
+.chapter-header {
+  padding:40px 24px 32px;
+  max-width:900px;margin:0 auto;
+}
+.back-btn {
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--surface);border:1px solid var(--border);
+  padding:8px 16px;border-radius:20px;
+  cursor:pointer;font-size:.85rem;color:var(--text2);
+  margin-bottom:24px;transition:all .2s;font-family:'Space Grotesk',sans-serif;
+}
+.back-btn:hover { color:var(--text);border-color:var(--accent); }
+
+.chapter-header h1 {
+  font-family:'Syne',sans-serif;
+  font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;
+  margin-bottom:12px;
+}
+.chapter-header .ch-desc {
+  color:var(--text2);font-size:1rem;line-height:1.6;
+  margin-bottom:24px;
+}
+
+.content-tabs {
+  display:flex;gap:8px;margin-bottom:32px;
+}
+.content-tab {
+  padding:10px 20px;border-radius:20px;
+  background:var(--surface);border:1px solid var(--border);
+  cursor:pointer;font-family:'Space Grotesk',sans-serif;
+  font-size:.85rem;font-weight:600;color:var(--text2);
+  transition:all .2s;
+}
+.content-tab.active {
+  background:var(--accent);border-color:var(--accent);color:#fff;
+}
+
+.tab-content { display:none;max-width:900px;margin:0 auto;padding:0 24px 60px; }
+.tab-content.active { display:block; }
+
+/* THEORY */
+.theory-section {
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:28px;margin-bottom:20px;
+}
+.theory-section h2 {
+  font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;
+  margin-bottom:16px;color:var(--accent);
+  display:flex;align-items:center;gap:10px;
+}
+.theory-section h3 {
+  font-size:1rem;font-weight:700;margin:20px 0 10px;
+  color:var(--accent4);
+}
+.theory-section p { color:var(--text);line-height:1.7;margin-bottom:12px;font-size:.92rem; }
+.theory-section ul { padding-left:20px;margin-bottom:12px; }
+.theory-section li { color:var(--text);line-height:1.7;margin-bottom:6px;font-size:.92rem; }
+.theory-section strong { color:var(--accent2); }
+
+.key-box {
+  background:rgba(108,99,255,0.1);
+  border:1px solid rgba(108,99,255,0.3);
+  border-radius:12px;padding:16px 20px;
+  margin:16px 0;
+}
+.key-box .key-label {
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;color:var(--accent);
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;
+}
+.key-box p { margin:0;font-size:.9rem;color:var(--text); }
+
+.case-box {
+  background:rgba(255,101,132,0.08);
+  border:1px solid rgba(255,101,132,0.25);
+  border-radius:12px;padding:16px 20px;margin:16px 0;
+}
+.case-box .case-label {
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;color:var(--accent2);
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;
+}
+
+/* QUIZ */
+.quiz-intro {
+  text-align:center;padding:40px 0;
+}
+.quiz-intro h2 { font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:12px; }
+.quiz-intro p { color:var(--text2);margin-bottom:24px; }
+
+.start-btn {
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border:none;padding:14px 36px;border-radius:30px;
+  color:#fff;font-family:'Space Grotesk',sans-serif;
+  font-size:1rem;font-weight:700;cursor:pointer;
+  transition:transform .2s,box-shadow .2s;
+}
+.start-btn:hover { transform:translateY(-2px);box-shadow:0 8px 24px rgba(108,99,255,.4); }
+
+.quiz-container { display:none; }
+.quiz-container.active { display:block; }
+
+.quiz-progress-bar {
+  height:4px;background:var(--border);border-radius:2px;
+  margin-bottom:32px;overflow:hidden;
+}
+.quiz-progress-fill {
+  height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transition:width .4s;
+}
+
+.quiz-q-num {
+  font-family:'JetBrains Mono',monospace;
+  font-size:.8rem;color:var(--text2);
+  letter-spacing:2px;margin-bottom:12px;
+}
+.quiz-question {
+  font-size:1.1rem;font-weight:600;
+  line-height:1.6;margin-bottom:28px;
+}
+.quiz-options { display:flex;flex-direction:column;gap:12px;margin-bottom:24px; }
+
+.quiz-opt {
+  background:var(--surface);
+  border:2px solid var(--border);
+  border-radius:12px;
+  padding:16px 20px;
+  cursor:pointer;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.92rem;
+  text-align:left;
+  color:var(--text);
+  transition:all .2s;
+  display:flex;align-items:center;gap:12px;
+}
+.quiz-opt:hover:not(.disabled) { border-color:var(--accent);background:rgba(108,99,255,.08); }
+.quiz-opt.correct { border-color:var(--accent3)!important;background:rgba(67,233,123,.12)!important;color:var(--accent3); }
+.quiz-opt.wrong { border-color:var(--danger)!important;background:rgba(255,71,87,.1)!important;color:var(--danger); }
+.quiz-opt.disabled { cursor:not-allowed; }
+
+.opt-letter {
+  width:28px;height:28px;border-radius:50%;
+  background:var(--surface2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.8rem;font-weight:700;flex-shrink:0;
+}
+
+.quiz-feedback {
+  display:none;
+  background:var(--surface2);border-radius:12px;
+  padding:20px;margin-bottom:20px;
+  border-left:4px solid var(--accent3);
+}
+.quiz-feedback.wrong-fb { border-left-color:var(--danger); }
+.quiz-feedback .fb-title { font-weight:700;margin-bottom:8px; }
+.quiz-feedback p { font-size:.9rem;color:var(--text2);line-height:1.6; }
+
+.quiz-nav {
+  display:flex;justify-content:space-between;align-items:center;
+}
+.next-btn {
+  background:var(--accent);border:none;
+  padding:12px 28px;border-radius:20px;
+  color:#fff;font-family:'Space Grotesk',sans-serif;
+  font-size:.9rem;font-weight:700;cursor:pointer;
+  transition:all .2s;display:none;
+}
+.next-btn:hover { background:#5a52e0;transform:translateX(4px); }
+
+.score-display {
+  display:none;text-align:center;padding:40px 0;
+}
+.score-display h2 { font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;margin-bottom:8px; }
+.big-score {
+  font-family:'Syne',sans-serif;font-size:5rem;font-weight:800;
+  background:linear-gradient(135deg,var(--accent3),#00c6ff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin:16px 0;
+}
+.xp-earned {
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(247,151,30,.15);border:1px solid rgba(247,151,30,.3);
+  padding:10px 20px;border-radius:20px;
+  color:var(--accent4);font-weight:700;font-size:1rem;
+  margin-bottom:24px;
+}
+
+/* ARTICLES CHALLENGE */
+.article-challenge { }
+.ac-intro { text-align:center;padding:40px 0; }
+.ac-intro h2 { font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:12px; }
+
+.ac-card {
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:28px;margin-bottom:20px;
+  display:none;
+}
+.ac-card.active { display:block; }
+
+.ac-article-ref {
+  font-family:'JetBrains Mono',monospace;
+  font-size:1rem;color:var(--accent2);
+  font-weight:700;margin-bottom:8px;
+}
+.ac-prompt {
+  font-size:1.1rem;font-weight:600;margin-bottom:20px;line-height:1.5;
+}
+.ac-hint {
+  font-size:.85rem;color:var(--text2);margin-bottom:16px;
+  display:flex;align-items:center;gap:6px;
+}
+
+.ac-input {
+  width:100%;
+  background:var(--surface2);
+  border:2px solid var(--border);
+  border-radius:12px;
+  padding:16px;
+  color:var(--text);
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.92rem;
+  resize:vertical;min-height:120px;
+  transition:border-color .2s;
+}
+.ac-input:focus { outline:none;border-color:var(--accent); }
+
+.ac-btns { display:flex;gap:12px;margin-top:16px;flex-wrap:wrap; }
+.reveal-btn {
+  background:var(--surface2);border:1px solid var(--border);
+  padding:10px 20px;border-radius:20px;
+  color:var(--text2);font-family:'Space Grotesk',sans-serif;
+  font-size:.85rem;font-weight:600;cursor:pointer;
+  transition:all .2s;
+}
+.reveal-btn:hover { border-color:var(--accent);color:var(--accent); }
+
+.ac-answer {
+  display:none;
+  background:rgba(67,233,123,.08);
+  border:1px solid rgba(67,233,123,.25);
+  border-radius:12px;padding:20px;margin-top:16px;
+}
+.ac-answer .ans-title {
+  font-weight:700;color:var(--accent3);margin-bottom:10px;
+  display:flex;align-items:center;gap:8px;
+}
+.ac-answer p { font-size:.9rem;line-height:1.7;color:var(--text2); }
+.ac-answer strong { color:var(--text); }
+
+.self-rate {
+  display:none;
+  margin-top:16px;
+  text-align:center;
+}
+.self-rate p { color:var(--text2);font-size:.9rem;margin-bottom:12px; }
+.rate-btns { display:flex;justify-content:center;gap:10px; }
+.rate-btn {
+  padding:10px 20px;border-radius:20px;
+  border:none;font-family:'Space Grotesk',sans-serif;
+  font-size:.85rem;font-weight:700;cursor:pointer;
+  transition:all .2s;
+}
+.rate-btn.good { background:rgba(67,233,123,.2);color:var(--accent3); }
+.rate-btn.ok { background:rgba(247,151,30,.2);color:var(--accent4); }
+.rate-btn.bad { background:rgba(255,71,87,.15);color:var(--danger); }
+.rate-btn:hover { transform:scale(1.05); }
+
+/* ===== LEADERBOARD / PROGRESS ===== */
+#progress-page { padding-top:80px; }
+
+.progress-inner { max-width:900px;margin:0 auto;padding:40px 24px 60px; }
+.progress-inner h1 {
+  font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;
+  margin-bottom:32px;
+}
+
+.progress-grid {
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:16px;margin-bottom:40px;
+}
+.progress-ch {
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:20px;
+}
+.progress-ch .pch-name {
+  font-size:.9rem;font-weight:700;margin-bottom:8px;
+}
+.progress-ch .pch-stats {
+  display:flex;gap:16px;margin-bottom:12px;
+}
+.pstat { text-align:center; }
+.pstat .n { font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800; }
+.pstat .n.green { color:var(--accent3); }
+.pstat .n.purple { color:var(--accent); }
+.pstat .l { font-size:.72rem;color:var(--text2); }
+
+.achievements-section h2 {
+  font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;
+  margin-bottom:20px;
+}
+.achievements-grid {
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:12px;
+}
+.achievement {
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:16px;text-align:center;
+  opacity:.4;transition:all .3s;
+}
+.achievement.unlocked {
+  opacity:1;border-color:var(--gold);
+  background:rgba(255,215,0,.05);
+}
+.achievement .ach-icon { font-size:2rem;margin-bottom:8px; }
+.achievement .ach-name { font-size:.82rem;font-weight:700; }
+.achievement .ach-desc { font-size:.72rem;color:var(--text2);margin-top:4px; }
+
+/* Toast */
+#toast {
+  position:fixed;bottom:24px;right:24px;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:12px;padding:16px 20px;
+  display:flex;align-items:center;gap:12px;
+  z-index:1000;
+  transform:translateX(200px);opacity:0;
+  transition:all .4s cubic-bezier(.175,.885,.32,1.275);
+  max-width:320px;
+}
+#toast.show { transform:translateX(0);opacity:1; }
+#toast .toast-icon { font-size:1.5rem; }
+#toast .toast-text { font-size:.88rem; }
+#toast .toast-text strong { display:block;margin-bottom:2px; }
+
+/* Combo */
+.combo-display {
+  font-family:'Syne',sans-serif;
+  font-size:.9rem;color:var(--accent4);font-weight:800;
+}
+
+.chapter-tag {
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 12px;border-radius:20px;
+  font-size:.72rem;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;
+  margin-bottom:16px;
+}
+.tag-gdpr { background:rgba(108,99,255,.15);color:var(--accent); }
+.tag-cyber { background:rgba(255,101,132,.15);color:var(--accent2); }
+.tag-ai { background:rgba(67,233,123,.15);color:var(--accent3); }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="logo">⚖️ LexAcademy</div>
+  <div class="nav-pills">
+    <button class="nav-pill active" data-page="home" onclick="showPage('home')">🏠 Home</button>
+    <button class="nav-pill" data-page="progress-page" onclick="showPage('progress-page')">📊 Progresso</button>
+  </div>
+  <div id="xp-bar">
+    <div class="level-badge" id="level-label">Lv.1</div>
+    <div class="xp-track"><div class="xp-fill" id="xp-fill" style="width:0%"></div></div>
+    <span id="xp-text" style="font-size:.8rem;color:var(--text2)">0 XP</span>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div id="home" class="page active">
+  <div class="hero">
+    <h1>Studia il Diritto<br><span>Come un Game</span></h1>
+    <p>GDPR, Cybersecurity & AI Act — 20 capitoli, quiz gamificati, sfide articoli. Diventa un esperto in 10 ore.</p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="num" id="stat-xp">0</div>
+      <div class="lbl">XP Totali</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="stat-correct">0</div>
+      <div class="lbl">Risposte Corrette</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="stat-streak">0</div>
+      <div class="lbl">Streak 🔥</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="stat-chapters">0/20</div>
+      <div class="lbl">Capitoli Completati</div>
+    </div>
+  </div>
+
+  <div class="chapters-grid" id="chapters-grid"></div>
+</div>
+
+<!-- CHAPTER DETAIL -->
+<div id="chapter-detail" class="page">
+  <div class="chapter-header">
+    <button class="back-btn" onclick="showPage('home')">← Torna ai Capitoli</button>
+    <div id="ch-tag"></div>
+    <h1 id="ch-title"></h1>
+    <p class="ch-desc" id="ch-desc"></p>
+    <div class="content-tabs">
+      <button class="content-tab active" onclick="switchTab('theory')">📖 Teoria</button>
+      <button class="content-tab" onclick="switchTab('quiz')">🧠 Quiz</button>
+      <button class="content-tab" onclick="switchTab('articles')">⚖️ Sfida Articoli</button>
+    </div>
+  </div>
+
+  <div id="tab-theory" class="tab-content active"></div>
+  <div id="tab-quiz" class="tab-content"></div>
+  <div id="tab-articles" class="tab-content"></div>
+</div>
+
+<!-- PROGRESS PAGE -->
+<div id="progress-page" class="page">
+  <div class="progress-inner">
+    <h1>📊 Il Tuo Progresso</h1>
+    <div class="progress-grid" id="progress-grid"></div>
+    <div class="achievements-section">
+      <h2>🏆 Achievements</h2>
+      <div class="achievements-grid" id="achievements-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast">
+  <div class="toast-icon" id="toast-icon"></div>
+  <div class="toast-text">
+    <strong id="toast-title"></strong>
+    <span id="toast-msg"></span>
+  </div>
+</div>
+
+<script>
+// =====================================================
+// STATE
+// =====================================================
+let state = {
+  xp: 0, level: 1, streak: 0, maxStreak: 0,
+  correct: 0, total: 0,
+  chapterProgress: {},
+  achievements: {}
+};
+
+try { const s = localStorage.getItem('lexacademy'); if(s) state = {...state, ...JSON.parse(s)}; } catch(e){}
+
+function saveState() {
+  try { localStorage.setItem('lexacademy', JSON.stringify(state)); } catch(e){}
+}
+
+function addXP(amount) {
+  state.xp += amount;
+  const xpPerLevel = 200;
+  state.level = Math.floor(state.xp / xpPerLevel) + 1;
+  updateXPBar();
+  saveState();
+  updateStats();
+}
+
+function updateXPBar() {
+  const xpPerLevel = 200;
+  const xpInLevel = state.xp % xpPerLevel;
+  const pct = (xpInLevel / xpPerLevel) * 100;
+  document.getElementById('xp-fill').style.width = pct + '%';
+  document.getElementById('level-label').textContent = 'Lv.' + state.level;
+  document.getElementById('xp-text').textContent = state.xp + ' XP';
+}
+
+function updateStats() {
+  document.getElementById('stat-xp').textContent = state.xp;
+  document.getElementById('stat-correct').textContent = state.correct;
+  document.getElementById('stat-streak').textContent = state.streak + '🔥';
+  const done = Object.values(state.chapterProgress).filter(p => p.quizDone).length;
+  document.getElementById('stat-chapters').textContent = done + '/20';
+}
+
+// =====================================================
+// TOAST
+// =====================================================
+let toastTimeout;
+function showToast(icon, title, msg, color='var(--accent)') {
+  clearTimeout(toastTimeout);
+  document.getElementById('toast-icon').textContent = icon;
+  document.getElementById('toast-title').textContent = title;
+  document.getElementById('toast-msg').textContent = msg;
+  document.getElementById('toast').style.borderColor = color;
+  document.getElementById('toast').classList.add('show');
+  toastTimeout = setTimeout(() => document.getElementById('toast').classList.remove('show'), 3500);
+}
+
+// =====================================================
+// CHAPTERS DATA
+// =====================================================
+const chapters = [
+  {
+    id: 1,
+    title: "Scopo Legislativo della Data Protection & GDPR",
+    tag: "gdpr", tagLabel: "GDPR",
+    desc: "Contesto storico, obiettivi della normativa, evoluzione del GDPR dal 1960 ad oggi.",
+    xp: 60,
+    theory: `
+<div class="theory-section">
+  <h2>📜 Contesto Storico</h2>
+  <p>Anni <strong>'60</strong>: transizione verso un'economia post-industriale. Le riforme sociali in Europa richiedevano la raccolta e il trattamento di grandi quantità di dati. L'avvento dei computer cambiò il rapporto tra individuo e Stato.</p>
+  <div class="key-box"><div class="key-label">Minaccia Chiave</div><p>L'informazione è potere. La crescita del computing creò rischi per la privacy, l'autonomia e la dignità degli individui.</p></div>
+  <h3>Sviluppo delle Leggi Nazionali</h3>
+  <ul>
+    <li>Svezia <strong>1973</strong> — prima legge sulla data protection</li>
+    <li>Germania, Francia, Danimarca <strong>1978</strong></li>
+    <li>UK <strong>1984</strong>, Belgio <strong>1992</strong></li>
+    <li>Direttiva <strong>95/46/EC</strong> — armonizzazione europea</li>
+    <li>Regolamento <strong>(EU) 2016/679</strong> — GDPR</li>
+  </ul>
+</div>
+<div class="theory-section">
+  <h2>🎯 Obiettivi della Data Protection (Art. 1 GDPR)</h2>
+  <p>Il GDPR ha due obiettivi principali:</p>
+  <ul>
+    <li><strong>1. Protezione dei diritti fondamentali</strong> — in particolare il diritto alla protezione dei dati personali</li>
+    <li><strong>2. Libera circolazione dei dati</strong> — il flusso di dati all'interno dell'UE non può essere limitato o vietato</li>
+  </ul>
+  <div class="key-box"><div class="key-label">Perché il GDPR</div><p>Impatto crescente delle nuove tecnologie, Big Data, information asymmetry, necessità di un mercato digitale unico europeo (Digital Single Market Strategy).</p></div>
+  <h3>Struttura del GDPR</h3>
+  <p>Il GDPR ha <strong>99 articoli</strong> divisi in <strong>11 capitoli</strong> + 173 considerando (recitals). Include: Disposizioni generali, Principi, Diritti dell'interessato, Controller e Processor, Trasferimenti verso paesi terzi, Autorità di controllo, Cooperazione, Misure correttive e sanzioni.</p>
+</div>`,
+    quiz: [
+      { q: "In quale anno è stata adottata la prima legge sulla data protection in Europa?", opts:["1960","1973","1978","1984"], correct:1, exp:"La Svezia ha adottato la prima legge sulla data protection nel 1973." },
+      { q: "Quali sono i due obiettivi principali dell'Art. 1 GDPR?", opts:["Protezione dei diritti fondamentali e libera circolazione dei dati","Sicurezza informatica e trasparenza","Consenso e minimizzazione dei dati","Accountability e sanzioni"], correct:0, exp:"L'Art. 1 GDPR stabilisce: (1) protezione dei diritti fondamentali, in particolare il diritto alla protezione dei dati personali, e (2) libera circolazione dei dati personali nell'UE." },
+      { q: "Quanti articoli ha il GDPR?", opts:["73","85","99","110"], correct:2, exp:"Il GDPR ha 99 articoli divisi in 11 capitoli, più 173 considerando." },
+      { q: "Quale Direttiva ha preceduto il GDPR nel processo di armonizzazione europea?", opts:["Direttiva 2013/40/EU","Direttiva 95/46/EC","Direttiva 2016/1148","Direttiva 2019/770"], correct:1, exp:"La Direttiva 95/46/EC sulla protezione dei dati personali e sulla libera circolazione di tali dati ha preceduto il GDPR." },
+      { q: "Cosa ha principalmente guidato la necessità del GDPR rispetto alla Direttiva precedente?", opts:["Troppi articoli nella Direttiva","L'impatto crescente delle nuove tecnologie, Big Data e digital single market","Le richieste degli Stati Membri di avere meno obblighi","La creazione di nuove autorità nazionali"], correct:1, exp:"Il GDPR è stato introdotto per rispondere all'impatto crescente delle nuove tecnologie, per avere un approccio più completo e coerente, per creare un mercato digitale unico e per rafforzare la responsabilità del controller." }
+    ],
+    articles: [
+      { ref:"Art. 1 GDPR – Oggetto e obiettivi", prompt:"Spiega l'Art. 1 del GDPR: cosa stabilisce e quali sono i suoi due pilastri fondamentali?", answer:"L'Art. 1 GDPR stabilisce le norme relative alla protezione delle persone fisiche con riguardo al trattamento dei dati personali e le norme relative alla libera circolazione di tali dati. <strong>Primo pilastro</strong>: protegge i diritti e le libertà fondamentali delle persone fisiche, in particolare il diritto alla protezione dei dati personali. <strong>Secondo pilastro</strong>: la libera circolazione dei dati personali all'interno dell'UE non è né limitata né vietata per ragioni connesse alla protezione delle persone fisiche." },
+      { ref:"Art. 2 GDPR – Ambito di applicazione materiale", prompt:"Descrivi l'ambito di applicazione materiale del GDPR (Art. 2) e le principali esenzioni.", answer:"Il GDPR si applica al trattamento dei dati personali interamente o parzialmente automatizzato e al trattamento non automatizzato di dati personali che formano parte di un archivio. <strong>Esenzioni</strong>: attività al di fuori dell'ambito del diritto dell'UE; attività degli Stati Membri nell'ambito del Cap. 2 Titolo V TEU; persone fisiche per attività puramente personali o domestiche; autorità competenti per prevenire/investigare reati." },
+    ]
+  },
+  {
+    id: 2,
+    title: "Pseudonimizzazione & Corte di Giustizia UE",
+    tag: "gdpr", tagLabel: "GDPR",
+    desc: "Definizione di dato personale, pseudonimizzazione, anonimizzazione e il caso C-413/23.",
+    xp: 80,
+    theory: `
+<div class="theory-section">
+  <h2>👤 Dato Personale (Art. 4(1) GDPR)</h2>
+  <p>Definizione <strong>estremamente ampia</strong>: qualsiasi informazione riguardante una persona fisica identificata o <em>identificabile</em>.</p>
+  <p>Una persona è identificabile se può essere identificata, direttamente o indirettamente, in particolare attraverso un identificatore come nome, numero ID, dati di localizzazione, identificativo online, o fattori specifici dell'identità fisica, fisiologica, genetica, mentale, economica, culturale o sociale.</p>
+  <div class="key-box"><div class="key-label">Identificatori Diretti</div><p>Nome e cognome, codice fiscale, numero passaporto</p></div>
+  <div class="key-box"><div class="key-label">Identificatori Indiretti</div><p>Indirizzo IP, user ID, geolocalizzazione, account number, cookie ID</p></div>
+  <div class="case-box"><div class="case-label">⚖️ Caso Breyer (C-582/14)</div><p>Un indirizzo IP dinamico registrato da un provider di servizi online costituisce dato personale quando il provider ha i mezzi legali per identificare la persona tramite dati aggiuntivi dell'internet service provider.</p></div>
+</div>
+<div class="theory-section">
+  <h2>🔐 Pseudonimizzazione (Art. 4(5) GDPR)</h2>
+  <p>Trattamento dei dati personali in modo che non possano più essere attribuiti a un interessato specifico <strong>senza l'uso di informazioni aggiuntive</strong>, purché tali informazioni aggiuntive siano conservate separatamente e soggette a misure tecniche e organizzative.</p>
+  <h3>Esempi di pseudonimizzazione:</h3>
+  <ul>
+    <li>Tokenizzazione</li>
+    <li>Hashing con secret salt value</li>
+    <li>Key-Coded Substitution</li>
+    <li>Identificatori randomizzati</li>
+  </ul>
+  <div class="key-box"><div class="key-label">Differenza Chiave</div><p><strong>Pseudonimizzazione</strong>: la re-identificazione è possibile (con le info aggiuntive). Rimane dato personale, GDPR applicabile. <strong>Anonimizzazione</strong>: identificazione impossibile (tutti i mezzi ragionevolmente utilizzabili). NON è più dato personale, GDPR non applicabile.</p></div>
+</div>
+<div class="theory-section">
+  <h2>⚖️ Caso C-413/23 (CJEU, 4 Settembre 2025)</h2>
+  <p>Il <strong>SRB</strong> (Single Resolution Board) ha avviato una consultazione durante la risoluzione di Banco Popular Español. I partecipanti hanno inviato commenti con dati personali.</p>
+  <p>Prima di trasmetterli a <strong>Deloitte</strong> (consulente esterno), SRB ha sostituito gli identificatori diretti con codici pseudonimizzati, conservando separatamente le informazioni di re-identificazione.</p>
+  <p>L'EDPS ha ritenuto che ci fosse una violazione degli obblighi informativi. Il Tribunale di primo grado ha ribaltato questa decisione: se Deloitte non ha i mezzi per re-identificare, i dati pseudonimizzati equivalgono ad anonimi per Deloitte.</p>
+  <div class="case-box"><div class="case-label">⚖️ La Corte di Giustizia Ribalta Ancora</div><p><strong>La qualificazione dei dati dalla prospettiva del destinatario NON è decisiva</strong> per valutare gli obblighi informativi del controller. La mera esistenza di informazioni che consentono l'identificazione preclude la classificazione come dati anonimi. I destinatari devono essere indicati nella privacy policy ANCHE se i dati non sono personali per il destinatario.</p></div>
+  <h3>Conclusioni del Caso C-413/23</h3>
+  <ul>
+    <li><strong>Identificabilità funzionale</strong>: valutata alla luce dello scopo (il profiling basta distinguibilità)</li>
+    <li><strong>Accountability = onere della prova</strong>: il controller deve dimostrare la robustezza delle misure</li>
+    <li><strong>Anonimizzazione è risk-based</strong>: non serve distruggere i raw data, focus su singling out, linkability, inference</li>
+    <li><strong>Threat Model importante</strong>: considera attaccanti non intenzionali e dati ausiliari pubblicamente disponibili</li>
+  </ul>
+</div>`,
+    quiz: [
+      { q:"La pseudonimizzazione rende un dato completamente anonimo secondo il GDPR?", opts:["Sì, una volta pseudonimizzato il GDPR non si applica","No, rimane dato personale e il GDPR è pienamente applicabile","Dipende da quante persone hanno accesso ai dati","Sì, se le informazioni aggiuntive sono conservate da un terzo"], correct:1, exp:"I dati pseudonimizzati rimangono dati personali e il GDPR è pienamente applicabile. Solo i dati veramente anonimi (impossibile re-identificazione con qualsiasi mezzo ragionevole) escono dall'ambito del GDPR." },
+      { q:"Nel caso C-413/23, cosa ha stabilito la Corte di Giustizia UE?", opts:["La qualificazione dei dati dalla prospettiva del destinatario è decisiva","I dati pseudonimizzati non sono mai dati personali per i terzi","La qualificazione dalla prospettiva del destinatario NON è decisiva per gli obblighi informativi del controller","Deloitte doveva essere informata solo se aveva i mezzi di re-identificazione"], correct:2, exp:"La Corte ha stabilito che la qualificazione dei dati dalla prospettiva del destinatario (Deloitte) NON è decisiva per valutare gli obblighi informativi del controller (SRB). I destinatari devono essere indicati nella privacy policy anche se i dati non sono personali per loro." },
+      { q:"Quale elemento distingue la pseudonimizzazione dall'anonimizzazione?", opts:["Il tipo di algoritmo usato","La pseudonimizzazione non usa chiavi di cifratura","La pseudonimizzazione permette ancora la re-identificazione tramite informazioni aggiuntive","L'anonimizzazione richiede il consenso dell'interessato"], correct:2, exp:"La pseudonimizzazione lascia ancora possibile la re-identificazione usando informazioni aggiuntive (conservate separatamente). L'anonimizzazione rende impossibile l'identificazione con qualsiasi mezzo ragionevolmente utilizzabile." },
+      { q:"Secondo il Considerando 26 GDPR, come si determina se una persona è identificabile?", opts:["Solo in base al numero di identificatori disponibili","Tenendo conto di tutti i mezzi ragionevolmente utilizzabili, come i costi e il tempo necessari per l'identificazione","Solo in base alla tecnologia disponibile al momento della creazione del dato","Esclusivamente in base alla posizione del controller"], correct:1, exp:"Il Considerando 26 stabilisce che per determinare se una persona è identificabile si tiene conto di tutti i mezzi ragionevolmente suscettibili di essere utilizzati, inclusi costi, tempo necessario, tecnologia disponibile al momento del trattamento e sviluppi tecnologici." },
+      { q:"Qual è un esempio di pseudonimizzazione?", opts:["Cancellare completamente il nome dell'interessato","Aggregare i dati in statistiche anonime","Hashing con un secret salt value","Cifrare il database con una password condivisa da tutti"], correct:2, exp:"L'hashing con un secret salt value è un esempio di pseudonimizzazione: sostituisce l'identificatore diretto con un hash, ma la re-identificazione rimane possibile (reversibile) tramite le informazioni aggiuntive. Gli altri esempi o sono anonimizzazione (primo, secondo) o non sono specificamente pseudonimizzazione (quarto)." }
+    ],
+    articles: [
+      { ref:"Art. 4(1) GDPR – Definizione di Dato Personale", prompt:"Definisci 'dato personale' secondo l'Art. 4(1) GDPR e fornisci esempi di identificatori diretti e indiretti.", answer:"<strong>Dato personale</strong>: qualsiasi informazione riguardante una persona fisica identificata o identificabile ('interessato'). Una persona fisica è identificabile quando può essere identificata, direttamente o indirettamente, in particolare attraverso un identificatore come il nome, numero di identificazione, dati relativi all'ubicazione, identificativo online o uno o più elementi caratteristici della sua identità fisica, fisiologica, genetica, psichica, economica, culturale o sociale. <strong>Diretti</strong>: nome, codice fiscale, passaporto. <strong>Indiretti</strong>: IP, user ID, geolocalizzazione, cookie ID." },
+      { ref:"Art. 4(5) GDPR – Pseudonimizzazione", prompt:"Definisci la pseudonimizzazione (Art. 4(5)) e spiega le sue caratteristiche fondamentali.", answer:"<strong>Pseudonimizzazione</strong>: trattamento dei dati personali in modo tale che non possano più essere attribuiti a un interessato specifico <em>senza informazioni aggiuntive</em>, purché tali informazioni aggiuntive siano conservate separatamente e soggette a misure tecniche e organizzative. Caratteristiche: (1) sostituisce gli identificatori diretti, (2) separa le informazioni aggiuntive, (3) richiede informazioni aggiuntive per la re-identificazione. I dati pseudonimizzati restano dati personali e il GDPR è applicabile." }
+    ]
+  },
+  {
+    id: 3,
+    title: "Definizioni Rilevanti nel GDPR",
+    tag: "gdpr", tagLabel: "GDPR",
+    desc: "Controller, Processor, Joint Controller, DPO, beneficiari della protezione e i 6 principi del trattamento.",
+    xp: 80,
+    theory: `
+<div class="theory-section">
+  <h2>🏛️ Controller (Art. 4(7) GDPR)</h2>
+  <p>Persona fisica o giuridica, autorità pubblica, agenzia o altro organismo che, <strong>da solo o insieme ad altri</strong>, determina le finalità e i mezzi del trattamento dei dati personali.</p>
+  <p>La controllership dipende non dall'esecuzione del trattamento ma <strong>dal potere decisionale</strong>. Il controller decide quali dati, per quanto, chi ha accesso, quali misure di sicurezza.</p>
+  <div class="key-box"><div class="key-label">Joint Controllers (Art. 26)</div><p>Se più entità determinano insieme finalità e mezzi, sono joint controller. Devono stabilire un arrangement che riflette i loro rispettivi ruoli. Ogni controller può essere chiamato a rispondere per l'intero danno (joint and several liability).</p></div>
+  <div class="case-box"><div class="case-label">⚖️ Wirtschaftsakademie (C-210/16)</div><p>L'amministratore di una fan page Facebook è co-controller con Facebook, perché partecipa alla determinazione delle finalità e dei mezzi del trattamento dei visitatori (attraverso la definizione del target audience e l'uso di Facebook Insights).</p></div>
+</div>
+<div class="theory-section">
+  <h2>⚙️ Processor (Art. 4(8) GDPR)</h2>
+  <p>Persona fisica o giuridica che tratta dati personali <strong>per conto del controller</strong>. Due condizioni: (1) è un'entità legale separata, (2) tratta dati per conto del controller. La sua esistenza dipende da una decisione del controller.</p>
+  <h3>Responsabilità & Danni (Art. 82)</h3>
+  <p>Ogni controller coinvolto è responsabile per il danno causato dal trattamento. Se più controller/processor sono coinvolti, ciascuno può essere ritenuto responsabile dell'intero danno (joint liability).</p>
+</div>
+<div class="theory-section">
+  <h2>👤 DPO – Data Protection Officer (Art. 37)</h2>
+  <p>Il DPO è obbligatorio quando: (a) il trattamento è effettuato da un'autorità pubblica o organismo pubblico; (b) le attività principali richiedono monitoraggio regolare e sistematico degli interessati su larga scala; (c) le attività principali riguardano categorie speciali di dati (Art. 9) o dati su condanne penali (Art. 10) su larga scala.</p>
+</div>
+<div class="theory-section">
+  <h2>⚖️ I 6 Principi (Art. 5 GDPR)</h2>
+  <p>Tutti i trattamenti devono rispettare questi principi (responsabilità del controller):</p>
+  <ul>
+    <li><strong>1. Liceità, correttezza e trasparenza</strong></li>
+    <li><strong>2. Limitazione della finalità</strong> — dati raccolti per scopi specifici, espliciti e legittimi</li>
+    <li><strong>3. Minimizzazione dei dati</strong></li>
+    <li><strong>4. Esattezza</strong></li>
+    <li><strong>5. Integrità e riservatezza</strong> — sicurezza adeguata</li>
+    <li><strong>6. Responsabilizzazione (Accountability)</strong> — il controller deve dimostrare la conformità</li>
+  </ul>
+</div>`,
+    quiz: [
+      { q:"Chi è il 'controller' secondo l'Art. 4(7) GDPR?", opts:["Chi esegue fisicamente il trattamento dei dati","Chi determina le finalità e i mezzi del trattamento","Chi raccoglie i dati per conto di un'altra organizzazione","L'autorità di vigilanza che supervisiona il trattamento"], correct:1, exp:"Il controller è la persona fisica o giuridica che determina le finalità e i mezzi del trattamento. La controllership dipende dal potere decisionale, non dall'esecuzione del trattamento." },
+      { q:"In quale caso un amministratore di fan page Facebook è considerato joint controller con Facebook?", opts:["Solo se ha firmato un accordo formale con Facebook","Mai, perché Facebook è l'unico controller dei dati","Quando partecipa alla determinazione delle finalità e mezzi del trattamento (es. definendo il target audience)","Solo se guadagna denaro dalla pagina"], correct:2, exp:"Nel caso Wirtschaftsakademie (C-210/16), la CGUE ha stabilito che l'amministratore di una fan page è co-controller con Facebook quando definisce parametri come il target audience, partecipando così alla determinazione delle finalità e dei mezzi del trattamento." },
+      { q:"Quando è obbligatorio nominare un DPO?", opts:["Sempre, in ogni organizzazione che tratta dati","Solo nelle grandi aziende con più di 250 dipendenti","Per autorità pubbliche, o quando il core business richiede monitoraggio sistematico su larga scala o trattamento di categorie speciali su larga scala","Solo nei settori sanitario e finanziario"], correct:2, exp:"Il DPO è obbligatorio in tre casi: (a) trattamento da autorità/organismo pubblico; (b) attività principali richiedono monitoraggio regolare e sistematico su larga scala; (c) attività principali riguardano categorie speciali (Art. 9) o condanne penali (Art. 10) su larga scala." },
+      { q:"Quale dei 6 principi Art. 5 GDPR riguarda la capacità del controller di dimostrare la conformità?", opts:["Minimizzazione dei dati","Esattezza","Limitazione della finalità","Responsabilizzazione (Accountability)"], correct:3, exp:"Il principio di Responsabilizzazione (Accountability) dell'Art. 5(2) stabilisce che il controller è responsabile del rispetto dei principi e deve essere in grado di dimostrarne la conformità." },
+      { q:"Cosa distingue un processor da un controller?", opts:["Il processor determina le finalità del trattamento, il controller no","Il processor tratta dati per conto del controller, senza determinarne le finalità","Il processor può trattare categorie speciali di dati, il controller no","Il processor non ha obblighi di sicurezza"], correct:1, exp:"Il processor tratta dati personali PER CONTO del controller, senza determinare autonomamente le finalità. Il controller invece determina sia le finalità sia i mezzi essenziali del trattamento." }
+    ],
+    articles: [
+      { ref:"Art. 4(7) & Art. 26 GDPR – Controller e Joint Controller", prompt:"Definisci 'controller' (Art. 4(7)) e 'joint controller' (Art. 26) e spiega le implicazioni di responsabilità.", answer:"<strong>Controller</strong> (Art. 4(7)): persona fisica o giuridica, autorità pubblica, agenzia o altro organismo che, da solo o insieme ad altri, determina le finalità e i mezzi del trattamento dei dati personali. <strong>Joint Controller</strong> (Art. 26): quando due o più controller determinano congiuntamente finalità e mezzi. Devono stipulare un arrangement che riflette i rispettivi ruoli. L'essenza deve essere comunicata agli interessati. L'interessato può esercitare i suoi diritti verso ciascuno dei controller. Ogni controller può essere ritenuto responsabile dell'intero danno (Art. 82 - joint and several liability)." },
+      { ref:"Art. 5 GDPR – Principi del Trattamento", prompt:"Elenca e spiega i 6 principi fondamentali del trattamento dei dati personali secondo l'Art. 5 GDPR.", answer:"I 6 principi del trattamento (Art. 5): <strong>1. Liceità, correttezza e trasparenza</strong>: trattamento lecito, corretto e trasparente. <strong>2. Limitazione della finalità</strong>: dati raccolti per scopi specifici, espliciti e legittimi; non trattati in modo incompatibile. <strong>3. Minimizzazione dei dati</strong>: adeguati, pertinenti, limitati a quanto necessario. <strong>4. Esattezza</strong>: esatti e aggiornati; cancellati/rettificati senza ritardo. <strong>5. Limitazione della conservazione</strong>: conservati non oltre il necessario. <strong>6. Integrità e riservatezza</strong>: sicurezza adeguata. + <strong>Responsabilizzazione</strong>: il controller dimostra la conformità." }
+    ]
+  },
+  {
+    id: 4,
+    title: "Requisiti del GDPR: Privacy by Design & Default",
+    tag: "gdpr", tagLabel: "GDPR",
+    desc: "Accountability, misure organizzative, DPIA, Privacy by Design (Art. 25) e Privacy by Default.",
+    xp: 70,
+    theory: `
+<div class="theory-section">
+  <h2>⚖️ Accountability (Art. 24)</h2>
+  <p>Due elementi: (1) responsabilità del controller di garantire la conformità al GDPR; (2) capacità di dimostrare tale conformità alle Autorità di Vigilanza. Le misure devono tenere conto della natura, portata, contesto e finalità del trattamento e del rischio per gli interessati.</p>
+</div>
+<div class="theory-section">
+  <h2>📋 Registro dei Trattamenti (Art. 30)</h2>
+  <p>Il controller deve mantenere un registro delle attività di trattamento. È fortemente consigliato perché: deve essere messo a disposizione delle Autorità su richiesta; permette di dimostrare la conformità; aiuta a rispondere alle richieste degli interessati.</p>
+  <div class="key-box"><div class="key-label">Esenzione Art. 30(5)</div><p>Organizzazioni con meno di 250 dipendenti sono esonerate, ma a condizioni difficili da soddisfare.</p></div>
+</div>
+<div class="theory-section">
+  <h2>📊 Data Protection Impact Assessment (DPIA)</h2>
+  <p>Obbligatoria quando un tipo di trattamento (in particolare usando nuove tecnologie) è suscettibile di presentare un rischio elevato per i diritti e le libertà degli interessati. Due step: (1) assessment interno del controller; (2) consultazione dell'Autorità se identifica un rischio elevato.</p>
+  <p>Necessaria per: <strong>automated decision-making</strong> con profilazione; <strong>trattamento su larga scala</strong> di categorie speciali; <strong>monitoraggio sistematico</strong> di aree pubbliche su larga scala.</p>
+</div>
+<div class="theory-section">
+  <h2>🔨 Privacy by Design (Art. 25(1)) — Livello Architetturale</h2>
+  <p>Il controller deve implementare misure tecniche e organizzative adeguate (es. pseudonimizzazione) sia al momento della determinazione dei mezzi sia al momento del trattamento, per integrare le salvaguardie necessarie. Obbliga sviluppatori e produttori a tenere in mente la minimizzazione dei dati.</p>
+  <div class="key-box"><div class="key-label">Principio</div><p>Il GDPR è <strong>technology neutral</strong>: non prescrive soluzioni tecniche specifiche, ma il risultato atteso.</p></div>
+</div>
+<div class="theory-section">
+  <h2>🔒 Privacy by Default (Art. 25(2)) — Livello Impostazioni</h2>
+  <p>Per impostazione predefinita vengono trattati solo i dati personali necessari per la finalità specifica. Le impostazioni privacy-friendly forniscono il massimo livello di privacy senza che gli utenti debbano modificare le impostazioni. Se vogliono condividere più dati, devono fare opt-in attivamente.</p>
+</div>`,
+    quiz: [
+      { q:"Cosa implica il principio di Accountability nel GDPR?", opts:["Il controller deve pubblicare tutti i suoi dati di trattamento online","Il controller è responsabile della conformità E deve poterla dimostrare alle Autorità","Solo i processor devono dimostrare la conformità","L'Accountability riguarda solo le violazioni dei dati"], correct:1, exp:"L'Accountability (Art. 24) ha due componenti: (1) la responsabilità del controller di garantire la conformità al GDPR; (2) la capacità del controller di dimostrare tale conformità alle Autorità di Vigilanza." },
+      { q:"Quando è obbligatoria una Data Protection Impact Assessment (DPIA)?", opts:["Per qualsiasi trattamento di dati personali","Solo per le banche e le assicurazioni","Quando un tipo di trattamento è suscettibile di presentare un rischio elevato per i diritti e libertà degli interessati","Solo per il trattamento di dati di minori"], correct:2, exp:"La DPIA è obbligatoria quando un tipo di trattamento (in particolare usando nuove tecnologie) è suscettibile di presentare un rischio elevato. È specificamente richiesta per automated decision-making con profilazione, trattamento di categorie speciali su larga scala, e monitoraggio sistematico di aree pubbliche su larga scala." },
+      { q:"Qual è la differenza principale tra Privacy by Design e Privacy by Default?", opts:["Non c'è differenza, sono la stessa cosa","Privacy by Design opera al livello architetturale (progettazione del sistema), Privacy by Default opera al livello delle impostazioni","Privacy by Design è obbligatoria solo per le grandi aziende","Privacy by Default richiede il consenso dell'utente"], correct:1, exp:"Privacy by Design (Art. 25(1)) opera a livello architetturale: misure integrate nella progettazione del sistema. Privacy by Default (Art. 25(2)) opera a livello di impostazioni: per default vengono trattati solo i dati necessari, con le impostazioni più protettive della privacy." },
+      { q:"La NIS 2 Directive e il GDPR si sovrappongono per quanto riguarda le misure di sicurezza?", opts:["No, sono leggi completamente separate senza sovrapposizioni","Sì, entrambe obbligano controller e processor a implementare misure tecniche e organizzative","Solo la NIS 2 riguarda la sicurezza informatica","Solo il GDPR riguarda la sicurezza dei dati"], correct:1, exp:"GDPR e NIS 2 obbligano congiuntamente controller e processor a implementare misure tecniche e organizzative appropriate. Questo crea una sovrapposizione importante nella gestione della sicurezza." },
+      { q:"Cosa succede se un'organizzazione con 300 dipendenti non mantiene un registro dei trattamenti (Art. 30)?", opts:["Nessuna conseguenza, il registro è solo consigliato","È soggetta a sanzioni in quanto il registro è obbligatorio per le organizzazioni con più di 250 dipendenti","L'esenzione si applica solo se il trattamento non è ad alto rischio","Deve pagare solo una multa simbolica"], correct:1, exp:"L'Art. 30(5) prevede un'esenzione per organizzazioni con meno di 250 dipendenti, ma solo a condizioni difficili da soddisfare. Un'organizzazione con 300 dipendenti supera la soglia e deve mantenere il registro. Le sanzioni per mancata conformità possono essere significative." }
+    ],
+    articles: [
+      { ref:"Art. 25 GDPR – Privacy by Design e by Default", prompt:"Spiega Art. 25 GDPR: cosa stabilisce Privacy by Design (comma 1) e Privacy by Default (comma 2)?", answer:"<strong>Art. 25(1) Privacy by Design</strong>: il controller implementa misure tecniche e organizzative adeguate (es. pseudonimizzazione) sia al momento della determinazione dei mezzi sia durante il trattamento, per attuare i principi di protezione dei dati e integrare le salvaguardie necessarie. Tiene conto dello stato dell'arte, costi di attuazione, natura, portata, contesto, finalità e rischi. <strong>Art. 25(2) Privacy by Default</strong>: il controller garantisce che per impostazione predefinita vengano trattati solo i dati necessari per la specifica finalità. Si applica a quantità di dati raccolti, entità del trattamento, periodo di conservazione e accessibilità. Le impostazioni di default devono essere le più protettive: se l'utente vuole condividere più dati, deve fare opt-in." }
+    ]
+  },
+  {
+    id: 5,
+    title: "Diritti degli Interessati",
+    tag: "gdpr", tagLabel: "GDPR",
+    desc: "Diritto di accesso, rettifica, cancellazione ('diritto all'oblio'), portabilità, opposizione e decisioni automatizzate.",
+    xp: 100,
+    theory: `
+<div class="theory-section">
+  <h2>📨 Risposta alle Richieste (Art. 12)</h2>
+  <p>Il controller deve rispondere a qualsiasi richiesta <strong>entro 1 mese</strong>. Le informazioni sono fornite gratuitamente. Per richieste manifestamente infondate o eccessive, può addebitare una tariffa ragionevole o rifiutare. Il controller deve dimostrare il carattere infondato/eccessivo della richiesta.</p>
+</div>
+<div class="theory-section">
+  <h2>🔍 Diritto di Accesso (Art. 15)</h2>
+  <p>Permette all'interessato di verificare la liceità del trattamento. Richiede una richiesta dell'interessato (a differenza degli obblighi informativi proattivi degli artt. 13-14). Il controller fornisce una copia dei dati in trattamento. La prima copia è gratuita.</p>
+</div>
+<div class="theory-section">
+  <h2>✏️ Rettifica ed Erasure (Artt. 16-17)</h2>
+  <p><strong>Rettifica (Art. 16)</strong>: rettifica senza ritardo dei dati inesatti. "Inesattezza" = i dati non riflettono la realtà.</p>
+  <p><strong>Cancellazione (Art. 17)</strong>: il "diritto all'oblio". Motivi: dati non più necessari; revoca del consenso; dati illecitamente trattati; obbligo legale; opposizione ai sensi dell'Art. 21(2) (direct marketing). Esecuzione entro 1 mese.</p>
+  <div class="case-box"><div class="case-label">⚖️ Google Spain (C-131/12)</div><p>Portata al centro dell'attenzione pubblica dal caso Google Spain nel 2014. Un motore di ricerca deve rimuovere dai risultati i link a pagine con informazioni obsolete, irrilevanti o eccessive, anche se la pubblicazione originale è lecita. I diritti fondamentali degli artt. 7 e 8 della Carta prevalgono, di regola, sull'interesse economico del gestore del motore di ricerca e sull'interesse del pubblico, salvo casi in cui il soggetto svolge un ruolo nella vita pubblica.</p></div>
+  <h3>Eccezioni alla Cancellazione (Art. 17(3))</h3>
+  <ul>
+    <li>Libertà di espressione e informazione</li>
+    <li>Obbligo legale del controller</li>
+    <li>Interesse pubblico nella sanità pubblica</li>
+    <li>Archiviazione di interesse pubblico, ricerca scientifica/storica</li>
+    <li>Accertamento, esercizio o difesa di un diritto in sede giudiziaria</li>
+  </ul>
+</div>
+<div class="theory-section">
+  <h2>📤 Portabilità dei Dati (Art. 20)</h2>
+  <p>Rafforza il controllo dell'interessato dove il trattamento è effettuato con mezzi automatizzati. Permette di trasmettere i dati da un controller all'altro. I dati devono essere in formato strutturato, di uso comune, leggibile da macchina e interoperabile. Principalmente pensato per i gestori di social network.</p>
+</div>
+<div class="theory-section">
+  <h2>🤖 Decisioni Automatizzate (Art. 22)</h2>
+  <p>Il diritto di non essere soggetto a una decisione basata <strong>esclusivamente</strong> su trattamento automatizzato (inclusa la profilazione) che produca effetti giuridici o effetti significativamente analoghi. Eccezioni: necessario per contratto; autorizzato dalla legge; basato su consenso esplicito.</p>
+  <div class="case-box"><div class="case-label">⚖️ SCHUFA (C-634/21)</div><p>La Corte ha adottato la wide scope interpretation: l'Art. 22 copre anche la preparazione automatizzata di una decisione (probability value) se tale valore è fortemente utilizzato da un terzo per prendere una decisione contrattuale. SCHUFA deve fornire informazioni significative sulla logica usata per il calcolo del credit score.</p></div>
+</div>`,
+    quiz: [
+      { q:"Entro quanto tempo il controller deve rispondere a una richiesta dell'interessato (Art. 12)?", opts:["15 giorni","30 giorni (1 mese)","60 giorni","Entro la fine del semestre fiscale"], correct:1, exp:"L'Art. 12(3) stabilisce che il controller deve fornire informazioni sulle azioni intraprese su richiesta senza ingiustificato ritardo e comunque entro 1 mese dal ricevimento della richiesta." },
+      { q:"Cosa ha stabilito il caso Google Spain (C-131/12) riguardo al diritto all'oblio?", opts:["Google non è mai responsabile per i contenuti indicizzati","Il motore di ricerca deve rimuovere risultati con informazioni obsolete, irrilevanti o eccessive, anche se la pubblicazione originale è lecita","Il diritto all'oblio non si applica ai motori di ricerca","Solo le persone pubbliche hanno il diritto all'oblio"], correct:1, exp:"Il caso Google Spain ha stabilito che il gestore di un motore di ricerca deve rimuovere dai risultati i link a pagine contenenti informazioni obsolete, irrilevanti o eccessive riguardanti una persona, anche se la pubblicazione originale è lecita, bilanciando con il diritto all'informazione." },
+      { q:"Quale eccezione al diritto di cancellazione (Art. 17(3)) permette di trattenere i dati nonostante la richiesta?", opts:["Il controller ha più di 250 dipendenti","I dati sono necessari per l'esercizio della libertà di espressione e informazione","I dati sono stati raccolti con consenso","Il controller ha concluso il contratto con l'interessato"], correct:1, exp:"L'Art. 17(3)(a) prevede che il diritto di cancellazione non si applica quando il trattamento è necessario per l'esercizio del diritto alla libertà di espressione e di informazione." },
+      { q:"Nel caso SCHUFA (C-634/21), quale interpretazione ha adottato la CGUE riguardo all'Art. 22?", opts:["Narrow scope: il credit score è solo un atto preparatorio e l'Art. 22 non si applica","Wide scope: l'Art. 22 si applica anche se la decisione finale è presa da un terzo che usa fortemente il score automatizzato","Il credit scoring è completamente escluso dal GDPR","SCHUFA può sempre rifiutare l'accesso al metodo di calcolo del score"], correct:1, exp:"La CGUE ha adottato la wide scope interpretation: l'Art. 22 si applica quando un valore di probabilità automatizzato viene trasmesso a un terzo controller che lo utilizza fortemente per decisioni contrattuali. SCHUFA deve quindi fornire informazioni significative sulla logica del processo automatizzato." },
+      { q:"Cosa richiede il diritto alla portabilità dei dati (Art. 20)?", opts:["Il controller deve cancellare tutti i dati dopo il trasferimento","L'interessato riceve i propri dati in formato strutturato, uso comune, leggibile da macchina e interoperabile","Il controller deve pagare i costi del trasferimento","La portabilità si applica solo ai dati non sensibili"], correct:1, exp:"L'Art. 20 richiede che l'interessato riceva i propri dati in formato strutturato, di uso comune, leggibile da macchina e interoperabile, e ha il diritto di trasmetterli direttamente da un controller all'altro, dove tecnicamente fattibile." }
+    ],
+    articles: [
+      { ref:"Art. 17 GDPR – Diritto alla Cancellazione ('Diritto all'Oblio')", prompt:"Spiega l'Art. 17 GDPR: quando sorge il diritto alla cancellazione, le eccezioni principali e cosa implica il 'diritto all'oblio' (Art. 17(2)).", answer:"<strong>Art. 17(1)</strong> - Motivi di cancellazione: (1) dati non più necessari per le finalità; (2) revoca del consenso senza altro fondamento giuridico; (3) dati trattati illecitamente; (4) obbligo legale; (5) dati raccolti con consenso di minore per servizi della società dell'informazione; (6) opposizione ai sensi dell'Art. 21(2) (direct marketing). <strong>Art. 17(3) - Eccezioni</strong>: libertà di espressione; obbligo legale; interesse pubblico; archiviazione/ricerca; difesa in giudizio. <strong>Art. 17(2) - Diritto all'Oblio</strong>: se il controller ha reso pubblici i dati ed è obbligato a cancellarli, deve adottare misure ragionevoli (incluse tecniche) per informare altri controller che trattano tali dati della richiesta di cancellazione. Caso Google Spain: include la rimozione dai risultati dei motori di ricerca." },
+      { ref:"Art. 22 GDPR – Decisioni Automatizzate", prompt:"Spiega l'Art. 22 GDPR: il diritto, le eccezioni e come si applica secondo l'interpretazione della CGUE nel caso SCHUFA.", answer:"<strong>Art. 22(1)</strong>: l'interessato ha il diritto di non essere soggetto a una decisione basata esclusivamente su trattamento automatizzato (inclusa profilazione) che produca effetti giuridici o effetti significativamente analoghi. <strong>Eccezioni (Art. 22(2))</strong>: (a) necessario per contratto; (b) autorizzato da legge UE/Stato Membro; (c) basato su consenso esplicito. <strong>Caso SCHUFA (C-634/21)</strong>: wide scope interpretation - Art. 22 si applica anche quando un valore di probabilità automatizzato viene trasmesso a un terzo che lo usa fortemente. Il controller deve fornire informazioni 'significative' sulla logica del processo automatizzato (Art. 15(1)(h))." }
+    ]
+  },
+  {
+    id: 6,
+    title: "AI Act e GDPR",
+    tag: "ai", tagLabel: "AI Act",
+    desc: "Interplay tra AI Act e GDPR, SCHUFA, Digital Omnibus e il ciclo di vita dei sistemi AI.",
+    xp: 90,
+    theory: `
+<div class="theory-section">
+  <h2>🤝 Differenze & Similarità</h2>
+  <p><strong>GDPR</strong>: principi di liceità, correttezza, trasparenza, minimizzazione, esattezza, limitazione della conservazione, integrità/riservatezza. Regolazione technology-neutral.</p>
+  <p><strong>AI Act</strong>: principi di supervisione umana, sicurezza tecnica, robustezza, governance dei dati, trasparenza, non-discriminazione, equità, benessere ambientale. Categorizzazione del rischio (inaccettabile, alto, limitato, minimo).</p>
+  <div class="key-box"><div class="key-label">Non interferenza (Recital 10 AI Act)</div><p>L'AI Act non pregiudica l'applicazione del GDPR esistente. I soggetti degli AI systems (provider, deployer) mantengono i loro obblighi come controller o processor ai sensi del GDPR. Gli interessati continuano a godere di tutti i diritti GDPR.</p></div>
+</div>
+<div class="theory-section">
+  <h2>🔗 Intersezioni Normative</h2>
+  <p><strong>Art. 15(1)(h) GDPR</strong>: diritto di accesso include informazioni significative sulla logica del processo decisionale automatizzato.</p>
+  <p><strong>Art. 22(1) AI Act</strong> (stesso numero!): stesso diritto di non essere soggetto a decisioni automatizzate. Il GDPR protegge gli interessati; l'AI Act il pubblico in generale.</p>
+  <p><strong>Applicazione cumulativa</strong>: per i sistemi AI ad alto rischio che implicano profilazione, si applicano sia GDPR sia AI Act.</p>
+</div>
+<div class="theory-section">
+  <h2>📜 Digital Omnibus (n. 837 & 836)</h2>
+  <p>Proposta di modifica di varie normative EU. Per il GDPR: modifica della definizione di "dato personale" (nuova definizione relativa all'entità ricevente); revisione delle categorie speciali per AI; modifiche all'Art. 22.</p>
+  <div class="case-box"><div class="case-label">⚠️ Critica EDPB-EDPS</div><p>L'EDPB e l'EDPS ritengono che la nuova definizione proposta di dato personale vada oltre la giurisprudenza CGUE, restringendo significativamente il concetto. La definizione dovrebbe dire cosa è un dato personale, non cosa non è. Rischio di loopholes nel regime di protezione.</p></div>
+  <p>Modifica Art. 22: dal "diritto di non essere soggetto" a una lista tassativa di casi in cui le decisioni automatizzate sono <em>permesse</em>. L'EDPB critica questo cambiamento: la CGUE ha interpretato l'Art. 22(1) come un divieto di principio.</p>
+</div>`,
+    quiz: [
+      { q:"Qual è la relazione tra AI Act e GDPR secondo il Recital 10 AI Act?", opts:["L'AI Act sostituisce il GDPR per i sistemi AI","L'AI Act non pregiudica il GDPR; gli obblighi GDPR come controller/processor rimangono","Il GDPR non si applica ai sistemi AI","L'AI Act ha la precedenza sul GDPR in caso di conflitto"], correct:1, exp:"Il Recital 10 AI Act stabilisce il principio di non-interferenza: l'AI Act non pregiudica l'applicazione del GDPR. I provider e deployer di sistemi AI mantengono i loro obblighi come controller/processor. Gli interessati continuano a godere di tutti i diritti GDPR." },
+      { q:"Cosa critica l'EDPB riguardo alla proposta di modifica dell'Art. 22 nel Digital Omnibus?", opts:["L'Art. 22 dovrebbe essere eliminato completamente","La proposta cambia da un 'diritto di non essere soggetto' a una lista di casi permessi, mentre la CGUE ha interpretato l'Art. 22 come un divieto di principio","La proposta è troppo restrittiva per le aziende tech","L'Art. 22 non dovrebbe mai applicarsi ai sistemi AI"], correct:1, exp:"L'EDPB critica che la proposta del Digital Omnibus trasformi l'Art. 22 da un divieto di principio (con eccezioni) a una lista tassativa di casi permessi. La CGUE ha interpretato l'Art. 22(1) come un divieto in linea di principio, la cui violazione non deve essere invocata individualmente dall'interessato." },
+      { q:"Qual è la principale differenza di obiettivi tra GDPR e AI Act?", opts:["Non c'è differenza di obiettivi","GDPR mira alla protezione dei dati personali; AI Act mira al funzionamento del mercato interno e a un'AI trustworthy","GDPR mira alla sicurezza informatica; AI Act alla trasparenza","GDPR si applica solo alle aziende; AI Act solo alle istituzioni pubbliche"], correct:1, exp:"Art. 1 GDPR: protezione dei diritti fondamentali delle persone fisiche con riguardo al trattamento dei dati e libera circolazione. Art. 1 AI Act: migliorare il funzionamento del mercato interno e promuovere un'AI human-centric e trustworthy, garantendo un alto livello di protezione di salute, sicurezza e diritti fondamentali." },
+      { q:"In quale caso un sistema AI ad alto rischio usato per la biometrica deve informare le persone (Art. 50(3) AI Act)?", opts:["Solo se il sistema è usato da autorità pubbliche","Sempre, senza eccezioni","I deployer di sistemi di riconoscimento emotivo o categorizzazione biometrica devono informare le persone esposte, salvo sistemi usati per prevenire/investigare reati","Solo se il sistema fa errori di classificazione"], correct:2, exp:"Art. 50(3) AI Act: i deployer di sistemi di riconoscimento emotivo o categorizzazione biometrica devono informare le persone naturali esposte e trattare i dati in conformità con il GDPR. Questa obbligo non si applica ai sistemi usati per rilevare, prevenire o investigare reati quando permesso dalla legge." }
+    ],
+    articles: [
+      { ref:"Art. 22(1) GDPR vs Art. 22(1) AI Act – Stessa numerazione, diversa portata", prompt:"Confronta l'Art. 22(1) GDPR con l'Art. 22(1) AI Act: cosa stabiliscono, in che modo si sovrappongono e cosa li distingue?", answer:"<strong>Art. 22(1) GDPR</strong>: l'interessato ha il diritto di non essere soggetto a una decisione basata esclusivamente su trattamento automatizzato (inclusa profilazione) che produca effetti giuridici o effetti significativamente analoghi. Protezione individuale dell'interessato; eccezioni per contratto, legge, consenso esplicito. <strong>Art. 22(1) AI Act</strong>: stessa protezione sostanziale ma nel framework AI. Il controller implementa misure adeguate a tutela dei diritti, incluso diritto a intervento umano, espressione del punto di vista e contestazione della decisione. <strong>Differenza</strong>: il GDPR protegge l'interessato come data subject; l'AI Act protegge rispetto ai rischi specifici dell'AI. Si applicano cumulativamente per sistemi AI ad alto rischio. Il Recital 10 AI Act assicura non-interferenza." }
+    ]
+  },
+  {
+    id: 7,
+    title: "Data Breach & Misure Preventive",
+    tag: "gdpr", tagLabel: "GDPR",
+    desc: "Definizione di data breach, obblighi di notifica (Art. 33), sicurezza del trattamento (Art. 32), codici di condotta.",
+    xp: 70,
+    theory: `
+<div class="theory-section">
+  <h2>⚠️ Personal Data Breach (Art. 4(12) GDPR)</h2>
+  <p>Violazione di sicurezza che comporta la <strong>distruzione, perdita, modifica, divulgazione non autorizzata o accesso</strong> a dati personali trasmessi, conservati o altrimenti trattati (accidentalmente o in modo illecito).</p>
+</div>
+<div class="theory-section">
+  <h2>📢 Notifica all'Autorità (Art. 33)</h2>
+  <p>Il controller deve notificare senza ritardo e, ove possibile, entro <strong>72 ore</strong> dall'averne conoscenza, all'Autorità di Vigilanza competente, a meno che la violazione non sia suscettibile di presentare un rischio per i diritti e le libertà delle persone fisiche.</p>
+  <p>Il <strong>processor</strong> NON ha l'obbligo di notifica all'Autorità: notifica solo al controller.</p>
+  <p>Contenuto minimo: natura della violazione; dati del DPO; conseguenze probabili; misure adottate/proposte.</p>
+</div>
+<div class="theory-section">
+  <h2>⚖️ Caso C-340/21 (Bulgarian National Revenue Agency)</h2>
+  <p>L'Agenzia bulgara delle entrate ha subito un cyberattack nel 2019 che ha esposto i dati di oltre 6 milioni di persone.</p>
+  <div class="key-box"><div class="key-label">Principi del Caso C-340/21</div><p>1. L'accesso non autorizzato da parte di terzi non dimostra di per sé l'inadeguatezza delle misure di sicurezza. 2. Il controller deve poter dimostrare la conformità delle misure. 3. L'onere della prova dell'adeguatezza delle misure di sicurezza (Art. 32) grava sul controller (non sull'interessato). 4. Il controller non è esonerato dalla responsabilità solo perché il breach è stato causato da un hacker esterno: deve dimostrare che il breach non è imputabile a proprie inadempienze. 5. Il timore di potenziale abuso dei dati può qualificare come danno immateriale (Art. 82(1)) se il timore è giustificato.</p></div>
+</div>
+<div class="theory-section">
+  <h2>🔐 Sicurezza del Trattamento (Art. 32)</h2>
+  <p>Il controller e il processor implementano misure tecniche e organizzative adeguate al rischio, incluse: pseudonimizzazione e cifratura; garanzia di continuità, integrità, disponibilità e resilienza; ripristino tempestivo; processi di test e valutazione periodici.</p>
+</div>
+<div class="theory-section">
+  <h2>📋 Codici di Condotta (Art. 40-41)</h2>
+  <p>Possono essere predisposti da associazioni e altri organismi che rappresentano categorie di controller/processor. Non hanno effetti giuridici vincolanti. Non sono prova di conformità al GDPR verso le Autorità. Ma facilitano l'onere della prova per certe obbligazioni.</p>
+</div>`,
+    quiz: [
+      { q:"Entro quanto tempo il controller deve notificare un data breach all'Autorità di Vigilanza (Art. 33)?", opts:["24 ore","48 ore","72 ore","7 giorni"], correct:2, exp:"L'Art. 33 GDPR stabilisce che il controller deve notificare senza ritardo e, ove possibile, entro 72 ore dall'averne conoscenza all'Autorità di Vigilanza, a meno che la violazione non sia suscettibile di presentare un rischio." },
+      { q:"Nel caso C-340/21, chi ha l'onere della prova dell'adeguatezza delle misure di sicurezza?", opts:["L'interessato che subisce il danno","Il processor","Il controller (data controller)","L'Autorità di Vigilanza"], correct:2, exp:"La CGUE ha stabilito nel caso C-340/21 che l'onere della prova dell'adeguatezza delle misure di sicurezza (Art. 32) grava sul controller, non sull'interessato, in linea con il principio di accountability (Art. 5(2))." },
+      { q:"Il processor ha l'obbligo di notificare un data breach direttamente all'Autorità di Vigilanza?", opts:["Sì, entro 24 ore","Sì, entro 72 ore insieme al controller","No, il processor notifica solo il controller","Sì, ma solo per violazioni che coinvolgono più di 1000 persone"], correct:2, exp:"Il processor NON ha l'obbligo di notificare la violazione all'Autorità di Vigilanza. Notifica solo il controller, che poi valuta se notificare l'Autorità entro 72 ore." },
+      { q:"Cosa sono i Codici di Condotta (Art. 40) nel GDPR?", opts:["Norme vincolanti che sostituiscono il GDPR per specifici settori","Framework volontari che le associazioni possono preparare, non sono prova di conformità ma facilitano l'onere della prova","Obblighi imposti dall'Autorità di Vigilanza a specifici settori","Contratti standard obbligatori tra controller e processor"], correct:1, exp:"I Codici di Condotta (Art. 40) sono framework volontari predisposti da associazioni e organismi. Non hanno effetti vincolanti e non servono come prova di conformità verso le Autorità, ma la loro adozione facilita l'onere della prova per determinate obbligazioni GDPR." }
+    ],
+    articles: [
+      { ref:"Art. 33 GDPR – Notifica Data Breach", prompt:"Spiega Art. 33 GDPR: obblighi di notifica di un data breach all'Autorità, tempistica, chi notifica e contenuto minimo.", answer:"<strong>Art. 33(1)</strong>: in caso di violazione di dati personali, il controller notifica senza ritardo (ove possibile entro 72 ore dall'averne conoscenza) all'Autorità di Vigilanza, a meno che la violazione non sia suscettibile di presentare un rischio per i diritti e le libertà delle persone. Se la notifica supera le 72 ore, deve essere motivata. <strong>Processor</strong>: notifica solo al controller (non all'Autorità). <strong>Art. 33(3) - Contenuto minimo</strong>: (1) natura della violazione (categorie e numero approssimativo di interessati e registri); (2) nome/contatti del DPO; (3) probabili conseguenze; (4) misure adottate o proposte per rimediare. <strong>Caso C-340/21</strong>: il controller non è esonerato da responsabilità se il breach è causato da un hacker esterno; deve dimostrare che non è imputabile a proprie inadempienze. Il timore di abuso può qualificare come danno immateriale (Art. 82)." }
+    ]
+  },
+  {
+    id: 8,
+    title: "Trasferimenti Dati & Paesi Terzi",
+    tag: "gdpr", tagLabel: "GDPR",
+    desc: "Approccio in due fasi, decisioni di adeguatezza, EU-US Data Privacy Framework, SCC e consenso specifico.",
+    xp: 60,
+    theory: `
+<div class="theory-section">
+  <h2>🌍 Trasferimento verso Paesi Terzi</h2>
+  <p>Approccio in <strong>due fasi</strong>:</p>
+  <ol style="padding-left:20px">
+    <li style="margin-bottom:8px;color:var(--text)"><strong>Fase 1</strong>: Il trasferimento deve rispettare i requisiti per il trattamento all'interno dell'UE (base giuridica)</li>
+    <li style="color:var(--text)"><strong>Fase 2</strong>: Il trasferimento deve anche soddisfare le condizioni dell'Art. 44 e ss. GDPR per garantire un livello adeguato di protezione</li>
+  </ol>
+  <div class="key-box"><div class="key-label">Se mancano le garanzie</div><p>Il trasferimento non può avere luogo indipendentemente dall'esistenza di una base giuridica (fase 1). La fase 2 è CUMULATIVA, non alternativa.</p></div>
+</div>
+<div class="theory-section">
+  <h2>✅ Decisione di Adeguatezza (Art. 45)</h2>
+  <p>La Commissione Europea ha riconosciuto come adeguati: Andorra, Argentina, Canada, Isole Fær Øer, Guernsey, Israele, Isola di Man, Jersey, Nuova Zelanda, Svizzera, <strong>USA</strong> (EU-US Data Privacy Framework), Uruguay.</p>
+  <p>L'<strong>EU-US Data Privacy Framework</strong> prevede un meccanismo di auto-certificazione: le entità devono registrarsi presso il Dipartimento del Commercio US.</p>
+</div>
+<div class="theory-section">
+  <h2>📝 Clausole Contrattuali Standard (SCC)</h2>
+  <p>Se un paese terzo non fornisce un livello adeguato di protezione, le parti possono usare le SCC. Le SCC vincolano solo l'entità specifica non-UE al livello di protezione UE — non qualificano l'intero paese come sicuro.</p>
+</div>
+<div class="theory-section">
+  <h2>👤 Consenso Specifico (Art. 49(1)(a))</h2>
+  <p>Un trasferimento può avvenire se l'interessato ha <strong>esplicitamente acconsentito</strong> al trasferimento proposto, dopo essere stato informato dei possibili rischi dovuti all'assenza di un livello adeguato di protezione nel paese terzo.</p>
+</div>`,
+    quiz: [
+      { q:"Qual è l'approccio in due fasi per i trasferimenti di dati verso paesi terzi?", opts:["Prima si valuta il paese terzo, poi si ottiene il consenso","Prima si deve avere una base giuridica per il trattamento (come se fosse UE), poi si devono rispettare le condizioni aggiuntive degli artt. 44 ss. GDPR","Prima si ottengono le SCC, poi si notifica l'Autorità","Prima si fa la DPIA, poi si trasferisce"], correct:1, exp:"L'approccio in due fasi: (1) il trasferimento deve rispettare i requisiti per il trattamento all'interno dell'UE (base giuridica appropriata); (2) il trasferimento deve soddisfare le condizioni degli artt. 44 ss. GDPR per garantire un livello adeguato di protezione. Entrambe le fasi sono cumulative." },
+      { q:"Gli USA sono nella lista dei paesi con decisione di adeguatezza?", opts:["No, non ci sono mai stati","Sì, tramite l'EU-US Data Privacy Framework","Sì, tramite il Privacy Shield (ancora in vigore)","No, i trasferimenti verso USA richiedono sempre SCC"], correct:1, exp:"Sì, la Commissione Europea ha adottato una decisione di adeguatezza per gli USA tramite l'EU-US Data Privacy Framework, che prevede un meccanismo di auto-certificazione registrandosi presso il Dipartimento del Commercio US." },
+      { q:"Cosa garantiscono le Clausole Contrattuali Standard (SCC)?", opts:["Qualificano l'intero paese terzo come sicuro","Vincolano solo l'entità specifica non-UE a garantire un livello di protezione comparabile all'UE","Eliminano la necessità di una base giuridica per il trattamento","Sostituiscono le decisioni di adeguatezza della Commissione"], correct:1, exp:"Le SCC vincolano contrattualmente solo la specifica entità non-UE (l'importatore di dati) a garantire un livello di protezione comparabile all'UE. Non qualificano l'intero paese terzo come sicuro." }
+    ],
+    articles: [
+      { ref:"Art. 44 & Art. 45 GDPR – Trasferimenti verso Paesi Terzi", prompt:"Spiega i principi generali dei trasferimenti verso paesi terzi (Art. 44) e la decisione di adeguatezza (Art. 45).", answer:"<strong>Art. 44</strong>: principio generale - qualsiasi trasferimento verso paese terzo può avvenire solo se si rispettano le condizioni del Capitolo V GDPR. <strong>Approccio in due fasi</strong>: (1) il trasferimento deve avere una base giuridica valida per il trattamento all'interno dell'UE; (2) il trasferimento deve soddisfare le condizioni aggiuntive degli artt. 44 ss. (decisione di adeguatezza, o garanzie adeguate, o deroghe specifiche). <strong>Art. 45 - Decisione di adeguatezza</strong>: la Commissione può decidere che un paese terzo garantisce un livello adeguato di protezione. In questo caso il trasferimento può avvenire senza autorizzazioni specifiche. Paesi adeguati includono EU-US Data Privacy Framework, Svizzera, Canada, Nuova Zelanda, ecc." }
+    ]
+  },
+  {
+    id: 9,
+    title: "Enforcement & Sanzioni GDPR",
+    tag: "gdpr", tagLabel: "GDPR",
+    desc: "Poteri investigativi delle Autorità, responsabilità civile (Art. 82), sanzioni amministrative e rimedi giudiziali.",
+    xp: 70,
+    theory: `
+<div class="theory-section">
+  <h2>🔍 Poteri Investigativi (Art. 58)</h2>
+  <p>Le Autorità di Vigilanza possono: ordinare la fornitura di informazioni; effettuare audit; notificare presunte violazioni; accedere a tutti i dati e le informazioni; accedere a qualsiasi locali del controller/processor (inclusi sopralluoghi non preannunciati).</p>
+  <p>Ogni misura investigativa deve essere <strong>appropriata, necessaria e proporzionata</strong>.</p>
+</div>
+<div class="theory-section">
+  <h2>⚖️ Responsabilità Civile (Art. 82)</h2>
+  <p>Chiunque abbia subito un danno materiale o immateriale da una violazione del GDPR ha diritto a ricevere un risarcimento dal controller o dal processor. "Danno" include danni materiali e immateriali (discriminazione sociale, stress psicologico...).</p>
+  <p>Il processor è direttamente responsabile per le violazioni degli obblighi specifici del processor o se agisce al di fuori delle istruzioni del controller.</p>
+  <div class="key-box"><div class="key-label">Joint Liability</div><p>Se più controller/processor sono coinvolti, ciascuno può essere ritenuto responsabile dell'intero danno. Il responsabile che ha pagato l'intero risarcimento può rivalersi sugli altri (Art. 82(5)).</p></div>
+</div>
+<div class="theory-section">
+  <h2>💰 Sanzioni Amministrative (Art. 83)</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+    <div class="key-box"><div class="key-label">Art. 83(4) — Tier 1</div><p>Fino a <strong>€10.000.000</strong> o il 2% del fatturato mondiale annuo precedente (il maggiore dei due)</p></div>
+    <div class="key-box"><div class="key-label">Art. 83(5) — Tier 2</div><p>Fino a <strong>€20.000.000</strong> o il 4% del fatturato mondiale annuo precedente (il maggiore dei due)</p></div>
+  </div>
+  <p style="margin-top:12px">Le sanzioni devono essere <strong>efficaci, proporzionate e dissuasive</strong>. Fattori aggravanti/attenuanti: natura, gravità, durata; carattere intenzionale; azioni per mitigare; livello di cooperazione; eventuali precedenti violazioni.</p>
+</div>`,
+    quiz: [
+      { q:"Qual è la sanzione massima prevista dall'Art. 83(5) GDPR (Tier 2)?", opts:["€5.000.000 o 1% del fatturato","€10.000.000 o 2% del fatturato","€20.000.000 o 4% del fatturato mondiale","€50.000.000 o 5% del fatturato"], correct:2, exp:"L'Art. 83(5) GDPR prevede sanzioni fino a €20.000.000 o, per le imprese, fino al 4% del fatturato mondiale annuo totale dell'esercizio precedente, se superiore (il maggiore dei due)." },
+      { q:"Un controller può essere ritenuto responsabile di un data breach causato da un hacker esterno?", opts:["No, la responsabilità del controller cessa quando il breach è causato da terzi","Sì, ma solo se non ha adottato alcuna misura di sicurezza","Sì, a meno che non dimostri che il breach non è in alcun modo imputabile alle proprie inadempienze rispetto agli obblighi GDPR","Solo se l'Autorità di Vigilanza lo ritiene colpevole"], correct:2, exp:"Secondo il caso C-340/21 e l'Art. 82(3) GDPR, un controller non è esonerato dalla responsabilità per danni solo perché un terzo (hacker) ha causato il breach. Il controller deve dimostrare che il breach non è in alcun modo imputabile alle proprie inadempienze rispetto agli obblighi GDPR." },
+      { q:"Cosa sono i tre criteri che le sanzioni GDPR devono rispettare?", opts:["Immediate, trasparenti e pubbliche","Efficaci, proporzionate e dissuasive","Uniformi, globali e automatiche","Civili, penali e amministrative"], correct:1, exp:"L'Art. 83(1) GDPR stabilisce che le sanzioni amministrative pecuniarie devono essere efficaci, proporzionate e dissuasive. Questi tre criteri guidano le Autorità di Vigilanza nella determinazione dell'importo specifico." },
+      { q:"Il processor può essere direttamente responsabile verso gli interessati ai sensi del GDPR?", opts:["No, il processor risponde solo verso il controller","Sì, il processor può essere direttamente responsabile per violazioni dei propri obblighi GDPR o se agisce fuori dalle istruzioni del controller","Solo in caso di data breach","Solo se ha firmato un accordo di responsabilità condivisa con il controller"], correct:1, exp:"Il processor è direttamente responsabile (Art. 82(2)) per violazioni degli obblighi GDPR specificamente diretti ai processor o se agisce al di fuori delle istruzioni del controller. Sia controller che processor sono parti responsabili ai sensi dell'Art. 82 GDPR." }
+    ],
+    articles: [
+      { ref:"Art. 82 GDPR – Responsabilità Civile e Risarcimento", prompt:"Spiega Art. 82 GDPR: chi può chiedere risarcimento, chi è responsabile, cosa è il danno e la joint liability.", answer:"<strong>Art. 82(1)</strong>: chiunque subisca un danno materiale o immateriale da una violazione del GDPR ha diritto al risarcimento dal controller o processor. <strong>Danno immateriale</strong>: discriminazione sociale, stress psicologico, barriere allo sviluppo della personalità. <strong>Responsabilità</strong>: ogni controller è responsabile per i danni causati dal trattamento. Il processor è responsabile per violazioni degli obblighi specifici del processor o se agisce fuori dalle istruzioni del controller. <strong>Joint liability (Art. 82(4))</strong>: se più controller/processor sono coinvolti, ciascuno può essere ritenuto responsabile per l'intero danno. <strong>Art. 82(5)</strong>: il responsabile che ha pagato l'intero risarcimento può rivalersi sugli altri per la parte corrispondente alla loro responsabilità. <strong>Onere della prova</strong>: il ricorrente deve dimostrare la violazione e il danno; il controller/processor può esimersi dimostrando nessuna responsabilità." }
+    ]
+  },
+  {
+    id: 10,
+    title: "GDPR & Blockchain Technologies",
+    tag: "gdpr", tagLabel: "GDPR",
+    desc: "Applicazione del GDPR alla blockchain, problemi con il diritto all'oblio, Privacy by Design e off-chain storage.",
+    xp: 80,
+    theory: `
+<div class="theory-section">
+  <h2>⛓️ Blockchain & GDPR</h2>
+  <p>La <strong>blockchain</strong> è un database decentralizzato che conserva informazioni su transazioni in una rete peer-to-peer, aggiungendo nuovi blocchi alla catena esistente. Caratteristiche: rete decentralizzata, quasi immutabilità, trasparenza, tracciabilità e sicurezza.</p>
+  <p>Tre categorie: (1) Public Blockchain; (2) Private Blockchain; (3) Consortium Blockchain.</p>
+</div>
+<div class="theory-section">
+  <h2>🔍 Ambito di Applicazione GDPR alla Blockchain</h2>
+  <p><strong>Ambito territoriale</strong>: la blockchain è generalmente soggetta al GDPR per entrambe le ragioni dell'Art. 3. Problema: difficoltà nell'identificare chi è il controller e chi il processor; il concetto di "establishment" è ambiguo in un network decentralizzato.</p>
+  <p><strong>Dati personali</strong>: le chiavi pubbliche e le informazioni transazionali possono permettere l'identificazione degli interessati (soprattutto se le wallet addresses possono essere collegate a identità reali tramite exchange, IP tracking o analisi). In molti casi le blockchain trattano dati almeno pseudo-anonimi — il GDPR si applica anche se i dati sono cifrati.</p>
+  <div class="key-box"><div class="key-label">Chi è il Controller?</div><p>Possibili controller: programmatori del codice blockchain originale, ogni partecipante, i miners, ogni nodo. Ogni nodo può potenzialmente qualificarsi come joint controller (Art. 26(1)). Ma si incontrano grandi sfide pratiche nell'applicare gli obblighi GDPR ai nodi di una blockchain pubblica.</p></div>
+</div>
+<div class="theory-section">
+  <h2>⚔️ Diritti degli Interessati vs Immutabilità</h2>
+  <p><strong>Diritto all'oblio (Art. 17)</strong> e <strong>Diritto di rettifica (Art. 16)</strong> sono praticamente inapplicabili in una blockchain pubblica a causa della sua struttura immutabile e decentralizzata. Possibili approcci: private blockchains, off-chain storage, metodi crittografici.</p>
+  <p>Il GDPR consente una flessibilità interpretativa dove gli obblighi devono essere soddisfatti "nella misura in cui tecnicamente fattibile" (es. Art. 17(2)).</p>
+</div>
+<div class="theory-section">
+  <h2>🔒 Privacy by Design & Off-Chain Storage (Art. 25)</h2>
+  <p><strong>Off-chain storage</strong>: collega le voci della blockchain a dati transazionali esterni tramite un hash pointer. Evita di modificare la blockchain originale; il database off-chain rimane modificabile (inclusa la possibilità di cancellare i dati). → <strong>Privacy by Design & Default</strong>.</p>
+  <p><strong>Aggregazione + noise</strong>: tecnica che raggruppa le transazioni e introduce "rumore", rendendo molto più difficile l'identificazione. → Privacy by Design.</p>
+</div>`,
+    quiz: [
+      { q:"Perché il diritto all'oblio (Art. 17) è problematico nelle blockchain pubbliche?", opts:["Perché non si applica mai ai dati finanziari","A causa della struttura immutabile e decentralizzata della blockchain, che rende tecnicamente impossibile cancellare i dati","Perché gli interessati non hanno mai consenso valido nelle blockchain","Perché le blockchain sono fuori dall'ambito territoriale del GDPR"], correct:1, exp:"La struttura quasi immutabile della blockchain rende praticamente inapplicabile il diritto all'oblio: i dati una volta inseriti nel blocco non possono essere eliminati. Questo crea tensione con l'Art. 17 GDPR, che richiede la cancellazione in certi casi." },
+      { q:"Come si collega l'off-chain storage ai principi di Privacy by Design e by Default?", opts:["Non c'è collegamento con questi principi","L'off-chain storage consente di mantenere la blockchain immutabile mentre i dati personali (fuori dalla chain) restano modificabili/cancellabili, realizzando Privacy by Design e by Default","L'off-chain storage viola il GDPR perché duplica i dati","L'off-chain storage è equivalente all'anonimizzazione"], correct:1, exp:"L'off-chain storage rappresenta una scelta architetturale (Privacy by Design): i dati personali non finiscono nella blockchain immutabile, ma in un database off-chain modificabile/cancellabile, collegato tramite hash. Questo consente di rispettare i diritti degli interessati. Per impostazione predefinita, sulla blockchain finisce solo l'hash (Privacy by Default)." },
+      { q:"In una blockchain pubblica, chi può essere considerato controller ai sensi del GDPR?", opts:["Solo la società che ha creato il progetto blockchain","Nessuno, poiché le blockchain sono decentralizzate","Programmatori del codice originale, partecipanti, miners, ogni nodo — con significative sfide pratiche nell'enforcement","Solo le autorità pubbliche che regolano le criptovalute"], correct:2, exp:"In una blockchain pubblica, vari soggetti potrebbero qualificarsi come controller: programmatori, partecipanti, miners, nodi. Ogni nodo può potenzialmente essere joint controller (Art. 26(1)) se determina congiuntamente finalità e mezzi. Tuttavia, applicare gli obblighi GDPR ai nodi di una rete decentralizzata è estremamente difficile nella pratica." }
+    ],
+    articles: [
+      { ref:"Art. 17(2) GDPR + Art. 25 GDPR – Blockchain e Reconciliazione", prompt:"Come si conciliano il diritto all'oblio (Art. 17(2)) e Privacy by Design (Art. 25) con la tecnologia blockchain?", answer:"<strong>Tensione fondamentale</strong>: l'immutabilità della blockchain contrasta con il diritto all'oblio (Art. 17) e rettifica (Art. 16). <strong>Flessibilità GDPR</strong>: l'Art. 17(2) usa l'espressione 'per quanto tecnicamente fattibile', ammettendo che le circostanze tecniche influenzano la portata degli obblighi. <strong>Soluzioni di reconciliazione</strong>: (1) Off-chain storage: dati personali conservati fuori dalla chain; sulla chain solo l'hash — consente modifiche/cancellazioni nell'off-chain. Realizza Privacy by Design (scelta architetturale a monte) e Privacy by Default (di default solo hash sulla chain). (2) Private blockchains: più facile controllo e governance. (3) Aggregazione + noise: riduce l'identificabilità. <strong>Art. 25</strong>: queste scelte tecniche realizzano minimizzazione, limitazione delle finalità e riduzione del rischio, come richiesto da Privacy by Design." }
+    ]
+  },
+  {
+    id: 14,
+    title: "Cybersecurity Law",
+    tag: "cyber", tagLabel: "Cybersecurity",
+    desc: "Cyber attacchi e minacce, danni da cyberthreats, rimedi e peculiarità del diritto della cybersecurity.",
+    xp: 90,
+    theory: `
+<div class="theory-section">
+  <h2>🌐 Definizioni Fondamentali (NIST)</h2>
+  <ul>
+    <li><strong>Cyberspace</strong>: rete interconnessa di tecnologie dell'informazione (Internet, telecomunicazioni, sistemi informatici, controller embedded nelle infrastrutture critiche)</li>
+    <li><strong>Cyber attack</strong>: assalto attraverso il cyberspace che mira a disturbare, disabilitare, distruggere o controllare l'ambiente informatico di un'organizzazione</li>
+    <li><strong>Cyber threat</strong>: qualsiasi evento che potrebbe influenzare negativamente le operazioni, gli asset, gli individui attraverso accesso non autorizzato, distruzione/modifica dei dati, denial of service</li>
+    <li><strong>Cyber risk</strong>: incertezza riguardante l'informazione e la tecnologia, che riflette rischi per CIA (confidentiality, integrity, availability)</li>
+    <li><strong>Vulnerability</strong>: debolezza in un sistema informatico che può essere sfruttata da una minaccia</li>
+  </ul>
+</div>
+<div class="theory-section">
+  <h2>⚠️ ENISA Threat Landscape 2024 — Prime Threats</h2>
+  <ul>
+    <li><strong>1. Ransomware</strong>: gli attori prendono il controllo degli asset e chiedono un riscatto</li>
+    <li><strong>2. Malware</strong>: codice malevolo che causa impatto su CIA del sistema</li>
+    <li><strong>3. Social Engineering</strong>: phishing, spear-phishing, whaling, smishing, vishing, BEC</li>
+    <li><strong>4. Threats against data</strong>: data breach (intenzionale) vs data leak (accidentale)</li>
+    <li><strong>5. Threats against availability</strong>: DDoS attacks</li>
+    <li><strong>6. Information manipulation</strong>: disinformazione e misinformazione</li>
+    <li><strong>7. Supply Chain Attacks</strong>: attacchi che combinano almeno due attacchi, coinvolgendo sia il fornitore che il cliente (es. SolarWinds)</li>
+  </ul>
+</div>
+<div class="theory-section">
+  <h2>⚖️ Peculiarità del Diritto della Cybersecurity</h2>
+  <p>Il diritto della cybersecurity impone <strong>obblighi positivi</strong>: non si limita a vietare comportamenti dannosi, ma richiede di agire attivamente per prevenire i rischi. Questo lo distingue da altre aree del diritto.</p>
+  <p>Motivo: l'<strong>interconnessione</strong>. In un sistema digitale altamente collegato, un singolo incidente può propagarsi rapidamente creando un effetto domino.</p>
+  <div class="key-box"><div class="key-label">Duty of Care</div><p>Le leggi di cybersecurity stabiliscono un heightened duty of care. Gli standard di diligenza non sono lasciati solo alla giurisprudenza, ma sono fissati nelle leggi di cybersecurity. Il legislatore non prescrive misure tecniche specifiche, ma il risultato atteso (principio di accountability).</p></div>
+</div>`,
+    quiz: [
+      { q:"Cosa distingue il diritto della cybersecurity da altre aree del diritto?", opts:["Si applica solo alle grandi aziende","Impone obblighi positivi (duty to act and prevent harm), non solo divieti","Si applica solo nel settore pubblico","Non prevede sanzioni, solo raccomandazioni"], correct:1, exp:"Il diritto della cybersecurity impone obblighi positivi: non si limita a vietare comportamenti dannosi, ma richiede ai soggetti di agire attivamente per prevenire i rischi. La ragione è l'interconnessione: in un sistema digitale collegato, un incidente può propagarsi rapidamente. Questa responsabilità proattiva e continua distingue la cybersecurity law." },
+      { q:"Qual è la differenza tra data breach e data leak?", opts:["Sono sinonimi","Data breach è accidentale, data leak è intenzionale","Data breach è intenzionale (attacco cybercriminale), data leak è accidentale (misconfigurazioni, vulnerabilità, errori umani)","Data breach riguarda solo dati finanziari, data leak tutti i dati"], correct:2, exp:"Data breach è un attacco intenzionale portato da un cybercriminale per ottenere accesso non autorizzato e diffusione di dati sensibili. Data leak è un evento accidentale che può causare la divulgazione non intenzionale di dati sensibili a causa di misconfiguratazioni, vulnerabilità o errori umani." },
+      { q:"Cos'è un attacco di tipo Supply Chain Attack?", opts:["Un attacco che prende di mira solo le supply chain fisiche","Un attacco che coinvolge la combinazione di almeno due attacchi, targeting sia il fornitore che il cliente","Un attacco DDoS contro i sistemi di e-commerce","Un'intercettazione dei dati nelle reti 5G"], correct:1, exp:"Un supply chain attack prende di mira la relazione tra organizzazioni e loro fornitori. Si considera un attacco di supply chain quando coinvolge una combinazione di almeno due attacchi, dove sia il fornitore che il cliente sono obiettivi. L'esempio più famoso è SolarWinds." },
+      { q:"Cosa caratterizza la Duty of Care nel diritto della cybersecurity?", opts:["È determinata esclusivamente dalla giurisprudenza caso per caso","Le leggi di cybersecurity stabiliscono un heightened duty of care con standard legali e tecnici specifici, senza prescrivere misure tecniche particolari ma il risultato atteso","Il duty of care riguarda solo il settore finanziario","Non ci sono obblighi di sicurezza a meno di non aver causato un danno"], correct:1, exp:"Il duty of care nel cybersecurity law è un heightened duty of care: gli standard di diligenza non sono lasciati solo alla giurisprudenza, ma sono fissati nelle leggi (es. NIS 2). Le leggi non sono prescrittive sul tipo di misure tecniche specifiche, ma mandano il risultato atteso sulla base del principio di accountability (Art. 21 NIS 2)." }
+    ],
+    articles: [
+      { ref:"Art. 21(1) NIS2 – Duty of Care in Cybersecurity", prompt:"Spiega come l'Art. 21(1) della NIS 2 Directive stabilisce il duty of care per le entità essenziali e importanti.", answer:"<strong>Art. 21(1) NIS2</strong>: le entità essenziali e importanti devono adottare misure tecniche, operative e organizzative appropriate e proporzionate per gestire i rischi posti alla sicurezza dei sistemi informatici di rete che utilizzano per le loro operazioni o per la fornitura dei loro servizi, e per prevenire o minimizzare l'impatto degli incidenti sui destinatari dei loro servizi e su altri servizi. <strong>Caratteristiche</strong>: (1) proporzionalità rispetto ai rischi; (2) approccio basato sul rischio (non prescrittivo di misure tecniche specifiche); (3) il risultato atteso è mandato, non le misure specifiche; (4) accountability — il controller deve poter dimostrare la conformità. Questo rappresenta un 'heightened duty of care' rispetto al diritto civile tradizionale, dove il duty of care è determinato dalla giurisprudenza." }
+    ]
+  },
+  {
+    id: 15,
+    title: "Il Quadro Giuridico EU di Cybersecurity",
+    tag: "cyber", tagLabel: "Cybersecurity",
+    desc: "Evoluzione dalla Direttiva 95/46 alla NIS 2, il Cybersecurity Package 2020, framework italiano e regolamentazioni settoriali.",
+    xp: 90,
+    theory: `
+<div class="theory-section">
+  <h2>📜 Preistoria: Direttiva 95/46/EC</h2>
+  <p>Le prime disposizioni di cybersecurity erano contenute nella legislazione EU sulla Data Protection. L'<strong>Art. 17</strong> della Direttiva 95/46 richiedeva al controller di implementare misure tecniche e organizzative appropriate per proteggere i dati personali contro accesso non autorizzato — i dati personali erano la <strong>prima preoccupazione di cybersecurity</strong>.</p>
+  <p>L'Art. 32 GDPR ha aggiornato questi obblighi, aggiungendo: pseudonimizzazione e cifratura; CIA e resilienza; ripristino tempestivo; processi di test periodici.</p>
+</div>
+<div class="theory-section">
+  <h2>🚀 Strategia di Cybersecurity 2013 (JOIN/2013/01)</h2>
+  <p>Priorità strategiche: (1) raggiungere la <strong>cyber resilience</strong> (capacità di un'entità di continuare a fornire il risultato atteso nonostante eventi cyber avversi); (2) promuovere la <strong>cyber deterrence</strong>. Coordinamento di attori e linee guida politiche.</p>
+</div>
+<div class="theory-section">
+  <h2>📦 EU Cybersecurity Package 2020</h2>
+  <p>Insieme di regolamenti, direttive e linee guida. Include:</p>
+  <ul>
+    <li>NIS Directive (2016/1148) → NIS 2 Directive (2022/2555)</li>
+    <li>DORA (Regulation 2022/2554) per il settore finanziario</li>
+    <li>CER Directive (2022/2557) per la resilienza delle entità critiche</li>
+    <li>Digital Services Act (Regulation 2022/2065)</li>
+    <li>Cybersecurity Act (Regulation 2019/881)</li>
+    <li>Cyber Resilience Act (Regulation 2024/2847)</li>
+    <li>AI Act (Regulation 2024/1689)</li>
+  </ul>
+</div>
+<div class="theory-section">
+  <h2>🇮🇹 Framework Italiano</h2>
+  <ul>
+    <li>L. 547/1993 — reati informatici nel Codice Penale</li>
+    <li>D.Lgs. 82/2021 — istituzione dell'<strong>ACN</strong> (Agenzia per la Cybersicurezza Nazionale)</li>
+    <li>DL 105/2019 → L. 133/2019 — Perimetro di Sicurezza Nazionale Cibernetica</li>
+    <li>D.Lgs. 138/2024 — implementazione NIS 2</li>
+    <li>L. 90/2024 — legge omnibus di Cybersecurity (obblighi PA, Centro Nazionale di Crittografia)</li>
+  </ul>
+</div>
+<div class="theory-section">
+  <h2>🏛️ I 4 Pilastri della Cybersecurity</h2>
+  <ul>
+    <li><strong>1. Risk Assessment</strong>: identificazione e valutazione dei rischi</li>
+    <li><strong>2. Obblighi per le entità</strong>: misure tecniche, organizzative; notifica degli incidenti</li>
+    <li><strong>3. Autorità settoriali competenti (CSA)</strong>: controllo e coordinamento</li>
+    <li><strong>4. Sanzioni</strong>: efficaci, proporzionate, dissuasive</li>
+  </ul>
+</div>`,
+    quiz: [
+      { q:"Dove si trovavano le prime disposizioni di cybersecurity nel diritto EU?", opts:["Nel Trattato di Lisbona","Nella Direttiva 95/46/EC sulla protezione dei dati (Art. 17)","Nel Codice Penale degli Stati Membri","Nella Strategia di Lisbona del 2000"], correct:1, exp:"Le prime disposizioni di cybersecurity EU erano contenute nella Direttiva 95/46/EC sulla protezione dei dati personali. L'Art. 17 richiedeva al controller di implementare misure tecniche e organizzative appropriate per proteggere i dati. I dati personali erano la prima preoccupazione di cybersecurity." },
+      { q:"Qual è la differenza tra cyber resilience e cyber deterrence?", opts:["Sono sinonimi","Cyber resilience è la capacità di continuare a fornire il servizio atteso nonostante eventi avversi; cyber deterrence usa misure credibili e dissuasive per scoraggiare i cybercriminali","Cyber resilience riguarda solo le infrastrutture critiche; cyber deterrence riguarda i privati","Cyber resilience è un obiettivo tecnico; cyber deterrence è un obiettivo legale"], correct:1, exp:"Cyber resilience (nella Strategia 2013) è la capacità di un'entità di continuare a fornire il risultato atteso nonostante eventi cyber avversi — focus sulla continuità operativa. Cyber deterrence usa misure credibili e dissuasive per scoraggiare potenziali cybercriminali e attaccanti — focus sulla prevenzione." },
+      { q:"Quale organismo italiano è responsabile per la cybersecurity nazionale?", opts:["AGCOM (Autorità Garante per le Comunicazioni)","Garante per la Protezione dei Dati Personali","ACN (Agenzia per la Cybersicurezza Nazionale)","Polizia Postale"], correct:2, exp:"L'ACN (Agenzia per la Cybersicurezza Nazionale) è stata istituita con il D.Lgs. 82/2021. È l'autorità nazionale competente per NIS 2 (D.Lgs. 138/2024) e il singolo punto di contatto. Gestisce il CSIRT Italia." },
+      { q:"Cosa prevede il Perimetro di Sicurezza Nazionale Cibernetica (DL 105/2019)?", opts:["La difesa fisica delle frontiere italiane","L'identificazione di soggetti pubblici e privati i cui sistemi IT sono critici per la sicurezza nazionale, con obblighi di sicurezza e notifica degli incidenti all'ACN CSIRT","Il divieto di usare software stranieri nella PA","L'obbligo di cifratura per tutti i dati pubblici"], correct:1, exp:"Il Perimetro di Sicurezza Nazionale Cibernetica (DL 105/2019) identifica soggetti pubblici e privati le cui reti e sistemi IT sono necessari per l'esercizio di funzioni essenziali o la fornitura di servizi essenziali per lo Stato. Questi soggetti hanno obblighi di preparare liste di asset strategici, adottare misure di sicurezza e notificare gli incidenti all'ACN CSIRT. Include anche obblighi di notifica al CVCN per l'acquisto di beni/servizi ICT da usare su asset strategici." }
+    ],
+    articles: [
+      { ref:"Art. 32 GDPR – Sicurezza del Trattamento (confronto con Art. 17 Direttiva 95/46)", prompt:"Confronta l'Art. 17 Direttiva 95/46 con l'Art. 32 GDPR: come è evoluta la normativa sulla sicurezza del trattamento?", answer:"<strong>Art. 17 Direttiva 95/46</strong>: primo passo - il controller implementa misure tecniche e organizzative appropriate per proteggere i dati da: distruzione/perdita accidentale o illecita, alterazione, divulgazione o accesso non autorizzati. Menzione specifica per trasmissione su rete. Il processor deve essere scelto dal controller garantendo misure adeguate. Il contratto con il processor deve vincolare il processor al controller e stabilire che agisce solo sulle istruzioni del controller. <strong>Art. 32 GDPR</strong>: evoluzione significativa - aggiunge: (a) pseudonimizzazione e cifratura; (b) garanzia di CIA e resilienza in corso dei sistemi; (c) capacità di ripristino tempestivo; (d) processi di test, valutazione e verifica periodici. Approccio risk-based esplicito. Il GDPR è più dettagliato e richiede un approccio sistematico alla sicurezza." }
+    ]
+  },
+  {
+    id: 16,
+    title: "NIS2 Directive",
+    tag: "cyber", tagLabel: "Cybersecurity",
+    desc: "Evoluzione da NIS 1 a NIS 2, entità essenziali vs importanti, obblighi di sicurezza e incident notification, sanzioni.",
+    xp: 100,
+    theory: `
+<div class="theory-section">
+  <h2>📋 NIS 1 → NIS 2</h2>
+  <p>La NIS 1 (Direttiva 2016/1148) ha avuto tre problemi principali: incertezza sull'ambito di applicazione; mancanza di armonizzazione (discrezionalità degli Stati Membri); assenza di condivisione sistematica delle informazioni. NIS 2 (Direttiva 2022/2555, in vigore dicembre 2022) è un <strong>paradigm shift</strong>.</p>
+  <div class="key-box"><div class="key-label">Novità NIS 2</div><p>Ambito allargato (nuovi settori); eliminazione OES/DSP → essential/important entities; lista di sanzioni analoghe al GDPR; lista minima obbligatoria di misure di sicurezza; maggiore coordinamento tra Stati Membri.</p></div>
+</div>
+<div class="theory-section">
+  <h2>🏢 Essential vs Important Entities</h2>
+  <p><strong>Essential Entities (Annex I)</strong>: settori ad alta criticità — energia, trasporti, bancario, infrastrutture dei mercati finanziari, sanità, acqua potabile, acque reflue, infrastrutture digitali, ICT service management, PA, spazio. Supervisione <strong>ex ante</strong>.</p>
+  <p><strong>Important Entities (Annex II)</strong>: altri settori critici — servizi postali, gestione dei rifiuti, chimica, produzione alimentare, manifatturiero, digital providers, ricerca. Supervisione <strong>ex post</strong>.</p>
+  <p><strong>Dimensione</strong>: almeno media impresa (50+ dipendenti, €10M turnover/balance sheet) o, per large enterprise (250+ dipendenti, €50M turnover, €43M balance sheet). Eccezioni alla regola dimensionale per entità intrinsecamente critiche.</p>
+</div>
+<div class="theory-section">
+  <h2>🔐 Obblighi Sicurezza (Art. 21)</h2>
+  <p>Approccio <strong>all-hazards</strong>. Include almeno: risk analysis e sicurezza dei sistemi; incident handling; business continuity (backup, disaster recovery); supply chain security; sicurezza in acquisizione/sviluppo/manutenzione sistemi; vulnerabilità handling; cyber hygiene; crittografia; sicurezza HR; multi-factor authentication; comunicazioni sicure.</p>
+</div>
+<div class="theory-section">
+  <h2>📢 Notifica Incidenti (Art. 23)</h2>
+  <ul>
+    <li><strong>24 ore</strong>: pre-notifica</li>
+    <li><strong>72 ore</strong>: informazioni aggiuntive e valutazione iniziale</li>
+    <li><strong>1 mese</strong>: rapporto finale</li>
+  </ul>
+  <p>Incidente significativo: grave interruzione operativa o perdita finanziaria; o impatto significativo su altri soggetti.</p>
+</div>
+<div class="theory-section">
+  <h2>💰 Sanzioni (Art. 34)</h2>
+  <p><strong>Essential Entities</strong>: fino a €10.000.000 o 2% del fatturato mondiale. <strong>Important Entities</strong>: fino a €7.000.000 o 1,4% del fatturato mondiale. Nessuna cumulazione con sanzioni GDPR per la stessa condotta (Art. 35).</p>
+  <p>Le persone fisiche responsabili delle essential entities possono essere personalmente responsabili. Management Board: responsabile per violazioni NIS 2; deve seguire training cybersecurity.</p>
+</div>`,
+    quiz: [
+      { q:"Qual è la principale differenza tra la supervisione di essential entities e important entities sotto NIS 2?", opts:["Le essential entities sono supervisionate ex post, le important ex ante","Le essential entities sono supervisionate ex ante (proattiva, anche senza violazioni), le important entities ex post (dopo problemi o segnalazioni)","Entrambe sono supervisionate allo stesso modo","Le important entities non sono supervisionate"], correct:1, exp:"NIS 2 stabilisce che le Essential Entities sono soggette a supervisione ex ante (proattiva, inclusi controlli anche senza violazioni identificate), mentre le Important Entities sono soggette a supervisione ex post (le autorità intervengono dopo problemi o segnalazioni). Entrambe sono soggette alle stesse misure di sicurezza obbligatorie (Art. 21) e alle stesse sanzioni." },
+      { q:"Entro quanto tempo un'entità NIS 2 deve inviare il rapporto finale dopo un incidente significativo?", opts:["24 ore","72 ore","1 settimana","1 mese dalla notifica dell'incidente"], correct:3, exp:"La tempistica NIS 2 per la notifica è: (a) entro 24 ore: early warning; (b) entro 72 ore: incident notification con informazioni aggiuntive e valutazione iniziale; (c) su richiesta: rapporto intermedio; (d) entro 1 mese dalla notifica sotto (b): rapporto finale con descrizione dettagliata, tipo di minaccia, misure di mitigazione, impatto transfrontaliero." },
+      { q:"Quale settore è classificato come 'highly critical' nell'Annex I della NIS 2?", opts:["Servizi postali","Gestione dei rifiuti","Spazio","Produzione alimentare"], correct:2, exp:"L'Annex I della NIS 2 elenca i settori ad alta criticità: energia, trasporti, bancario, infrastrutture dei mercati finanziari, sanità, acqua potabile, acque reflue, infrastrutture digitali, ICT service management, pubblica amministrazione e SPAZIO. I servizi postali, gestione dei rifiuti e produzione alimentare sono nell'Annex II." },
+      { q:"In Italia, chi è l'autorità competente per NIS 2?", opts:["Garante per la Protezione dei Dati Personali","AGCOM","ACN (Agenzia per la Cybersicurezza Nazionale)","Guardia di Finanza"], correct:2, exp:"In Italia, il D.Lgs. 138/2024 (implementazione di NIS 2) designa l'ACN (Agenzia per la Cybersicurezza Nazionale) come autorità NIS competente e singolo punto di contatto. L'ACN gestisce anche il CSIRT Italia." },
+      { q:"Esiste un divieto di cumulo tra sanzioni NIS 2 e GDPR?", opts:["No, entrambe si applicano sempre indipendentemente","Sì, se la stessa condotta viola sia GDPR che NIS 2, l'autorità NIS non può imporre una sanzione pecuniaria aggiuntiva (Art. 35 NIS 2)","Solo le essential entities beneficiano del divieto di cumulo","Il cumulo è permesso ma limitato al 4% del fatturato"], correct:1, exp:"Art. 35 NIS 2: se un'Autorità GDPR (Art. 55/56 Reg. 2016/679) impone una sanzione pecuniaria (Art. 58(2)(i) GDPR), l'autorità NIS non può imporre un'ulteriore sanzione pecuniaria NIS per la stessa condotta. Tuttavia, l'autorità NIS può comunque imporre altre misure correttive (senza sanzione pecuniaria)." }
+    ],
+    articles: [
+      { ref:"Art. 21 NIS2 – Misure di Gestione del Rischio di Cybersecurity", prompt:"Spiega Art. 21 NIS2: a chi si applica, cosa richiede e qual è l'approccio sottostante.", answer:"<strong>Art. 21 NIS2</strong> si applica a tutte le entità essenziali e importanti. Richiede l'adozione di misure tecniche, operative e organizzative appropriate e proporzionate per gestire i rischi di sicurezza dei sistemi informatici. <strong>Approccio all-hazards</strong> (Recital 79): mira a proteggere i sistemi da incidenti. Misure obbligatorie minime includono: (1) politiche di risk analysis e sicurezza dei sistemi; (2) gestione degli incidenti; (3) business continuity (backup, disaster recovery, crisis management); (4) supply chain security (relazioni con fornitori diretti); (5) sicurezza in acquisizione, sviluppo e manutenzione sistemi; (6) cyber hygiene e formazione; (7) crittografia; (8) sicurezza HR, access control, asset management; (9) multi-factor authentication o continuous authentication. Le entità devono anche considerare le vulnerabilità specifiche di ciascun fornitore diretto. Non è una checklist fissa: Art. 21 elenca categorie generali, l'implementazione concreta è lasciata alle aziende (principio di accountability)." },
+      { ref:"Art. 23 NIS2 – Obblighi di Notifica degli Incidenti", prompt:"Spiega Art. 23 NIS2: quando scatta l'obbligo di notifica, la tempistica e cosa include la notifica.", answer:"<strong>Art. 23 NIS2</strong>: le entità essenziali e importanti notificano senza ritardo al CSIRT (o altra autorità competente) gli incidenti aventi un impatto significativo sulla fornitura dei loro servizi. <strong>Incidente significativo</strong>: (a) ha causato o è in grado di causare grave interruzione operativa o perdita finanziaria; (b) ha colpito o è in grado di colpire altri soggetti causando danni materiali o immateriali considerevoli. <strong>Tempistica</strong>: (a) entro 24 ore: early warning (pre-notifica); (b) entro 72 ore: incident notification con informazioni aggiornate e valutazione iniziale; (c) su richiesta dell'autorità: rapporto intermedio; (d) entro 1 mese dalla notifica (b): rapporto finale con descrizione dettagliata, tipo di minaccia o causa principale, misure di mitigazione, impatto transfrontaliero. Le entità possono essere richieste di informare anche i destinatari dei servizi." }
+    ]
+  },
+  {
+    id: 18,
+    title: "DORA Regulation",
+    tag: "cyber", tagLabel: "Cybersecurity",
+    desc: "Digital Operational Resilience Act per il settore finanziario: ICT risk management framework, TLPT, terze parti ICT.",
+    xp: 100,
+    theory: `
+<div class="theory-section">
+  <h2>🏦 Razionale di DORA (Recitals 2, 3, 6)</h2>
+  <p>L'ICT ha un ruolo critico nei servizi finanziari. La digitalizzazione ha approfondito le <strong>interconnessioni e dipendenze</strong> nel settore finanziario. Un singolo incidente cyber può propagarsi rapidamente ai circa 22.000 soggetti finanziari EU, minacciando la stabilità del sistema finanziario. DORA mira a rendere il settore finanziario più <strong>resiliente da un punto di vista operativo</strong>.</p>
+</div>
+<div class="theory-section">
+  <h2>⚖️ DORA e NIS 2 — Lex Specialis</h2>
+  <p>DORA è <strong>lex specialis</strong> rispetto alla NIS 2 nel settore finanziario: requisiti più stringenti su ICT risk management e incident reporting. NIS 2 rimane il framework orizzontale generale; DORA è specifico per il settore finanziario con focus su outsourcing, cloud e fornitori terzi.</p>
+</div>
+<div class="theory-section">
+  <h2>📊 ICT Risk Management Framework (Art. 6)</h2>
+  <p>I soggetti finanziari devono adottare un ICT Risk Management Framework strutturato intorno a <strong>4 obiettivi</strong> (modello MBO - Management By Objectives):</p>
+  <ul>
+    <li><strong>Identify (Art. 8)</strong>: identificare continuamente i rischi ICT, le vulnerabilità, i cambiamenti principali</li>
+    <li><strong>Protect & Prevent (Art. 9)</strong>: strumenti ICT di sicurezza appropriati; CIA dei dati a riposo, in uso e in transito; least privilege principle; strong authentication; change management</li>
+    <li><strong>Detect (Art. 10)</strong>: meccanismi per rilevare prontamente attività anomale, allarmi automatici, monitoraggio utenti</li>
+    <li><strong>Respond & Recover (Art. 11)</strong>: business continuity policy; piani di risposta rapida; backup policies; redundant ICT capacities</li>
+  </ul>
+</div>
+<div class="theory-section">
+  <h2>🔴 Threat-Led Penetration Testing (TLPT) (Art. 26)</h2>
+  <p>Framework che imita le tattiche, tecniche e procedure degli attori reali di minaccia — <strong>red team test</strong> sui sistemi di produzione live. Obbligatorio per i soggetti più grandi. Frequenza minima: <strong>ogni 3 anni</strong>. Deve coprire funzioni critiche/importanti. Approvazione dal competente authority richiesta.</p>
+</div>
+<div class="theory-section">
+  <h2>🤝 Gestione del Rischio Terze Parti ICT (Artt. 28-30)</h2>
+  <p>Due diligence pre-contrattuale: valutare se il contratto copre funzioni critiche; identificare rischi di ICT concentration risk; valutare adeguatezza dei requisiti di sicurezza del fornitore.</p>
+  <p>Contenuto contrattuale obbligatorio (Art. 30): descrizione chiara dei servizi; localizzazione dei dati; disponibilità, autenticità, integrità e riservatezza; accesso/recupero dei dati in caso di insolvenza; service level agreements; diritti di accesso, ispezione e audit; strategie di exit.</p>
+</div>`,
+    quiz: [
+      { q:"DORA è lex specialis rispetto a quale altra normativa?", opts:["GDPR","NIS 2 Directive","AI Act","Direttiva PSD2"], correct:1, exp:"DORA (Recital 16) è lex specialis rispetto alla NIS 2 Directive nel settore finanziario. Aumenta il livello di armonizzazione dei componenti di digital resilience e introduce requisiti più stringenti di ICT risk management e incident reporting rispetto alla NIS 2." },
+      { q:"Su quanti obiettivi è strutturato l'ICT Risk Management Framework di DORA?", opts:["2","3","4","6"], correct:2, exp:"L'ICT Risk Management Framework di DORA (Art. 6) è strutturato intorno a 4 obiettivi nel modello MBO: (1) Identify (Art. 8), (2) Protect & Prevent (Art. 9), (3) Detect (Art. 10), (4) Respond & Recover (Art. 11). Non prescrive misure individuali specifiche ma obiettivi da raggiungere." },
+      { q:"Cosa è il Threat-Led Penetration Testing (TLPT)?", opts:["Un semplice vulnerability scan trimestrale","Un framework che imita tattiche reali di minaccia (red team test) sui sistemi di produzione live, eseguito almeno ogni 3 anni","Un audit annuale dei sistemi ICT","Un test di compliance eseguito dall'Autorità di Vigilanza"], correct:1, exp:"TLPT (Art. 26 DORA) è un framework che imita le tattiche, tecniche e procedure di attori reali di minaccia (red team test) eseguito sui sistemi di produzione live. Deve coprire funzioni critiche/importanti, essere eseguito almeno ogni 3 anni, e la sua portata deve essere approvata dalle autorità competenti." },
+      { q:"Qual è l'obiettivo principale di DORA (Art. 1)?", opts:["Proteggere i dati personali nel settore finanziario","Raggiungere un alto livello comune di digital operational resilience (DOR)","Regolare le criptovalute","Prevenire il riciclaggio di denaro digitale"], correct:1, exp:"L'Art. 1 DORA ha come oggetto il raggiungimento di un alto livello comune di digital operational resilience (DOR) — la capacità di un soggetto finanziario di costruire, garantire e rivedere la propria integrità e affidabilità operativa per gestire i rischi ICT e garantire la continuità dei servizi finanziari." }
+    ],
+    articles: [
+      { ref:"Art. 6 DORA – ICT Risk Management Framework", prompt:"Spiega Art. 6 DORA: cosa è l'ICT Risk Management Framework, cosa deve includere e come è strutturato?", answer:"<strong>Art. 6 DORA</strong>: i soggetti finanziari adottano un ICT Risk Management Framework per gestire rapidamente i rischi ICT. <strong>Contenuto minimo</strong>: strategie, politiche, procedure, protocolli ICT e strumenti necessari per proteggere tutti gli information assets e ICT assets, inclusi componenti fisici. <strong>Struttura 4 obiettivi (MBO)</strong>: (1) Identify (Art. 8): identificare continuamente i rischi ICT, esposizione ad altre entità finanziarie, vulnerabilità, cambiamenti principali nell'infrastruttura; (2) Protect & Prevent (Art. 9): misure CIA per dati a riposo/in uso/in transito, least privilege principle, strong authentication, change management, patch policies; (3) Detect (Art. 10): meccanismi per rilevare attività anomale, alert automatici, monitoraggio utenti; (4) Respond & Recover (Art. 11): business continuity, risposta rapida agli incidenti, backup policies, redundant ICT capacities. Framework deve spiegare come supporta la business strategy dell'entità e analizzare il risk tolerance level." }
+    ]
+  },
+  {
+    id: 19,
+    title: "Cybersecurity & AI",
+    tag: "ai", tagLabel: "AI Act",
+    desc: "Vulnerabilità AI-specifiche, attacchi adversariali, evasione, data poisoning e obblighi dell'AI Act per sistemi AI ad alto rischio.",
+    xp: 100,
+    theory: `
+<div class="theory-section">
+  <h2>🤖 Definizione di AI System (Art. 3 AI Act)</h2>
+  <p>Sistema <strong>machine-based</strong> progettato per operare con vari livelli di autonomia e che può mostrare adattività dopo il deployment e che, per obiettivi espliciti o impliciti, <strong>inferisce</strong> dagli input ricevuti come generare output (previsioni, contenuti, raccomandazioni, decisioni) che possono influenzare ambienti fisici o virtuali.</p>
+  <p>Caratteristiche chiave: <strong>inferenza</strong> (processo per ottenere output); <strong>autonomia</strong> (grado di indipendenza dall'intervento umano); <strong>adattività</strong> (auto-apprendimento, cambia durante l'uso).</p>
+</div>
+<div class="theory-section">
+  <h2>⚠️ Vulnerabilità AI-Specifiche</h2>
+  <ul>
+    <li><strong>Evasion attacks</strong>: l'attaccante modifica i dati di input (anche impercettibilmente) perché il modello non classifichi correttamente. Es: stickers su segnali stradali che fanno credere ai veicoli autonomi di vedere segnali di velocità.</li>
+    <li><strong>Data poisoning</strong>: modifica il comportamento del modello AI alterando i dataset di training. Es: caso Tay (Microsoft, 2016) — utenti inviavano messaggi offensivi per "avvelenare" i dati di training.</li>
+    <li><strong>Model poisoning</strong>: avvelenamento dei componenti pre-addestrati usati nel training.</li>
+    <li><strong>Model extraction (stealing)</strong>: costruisce un sistema surrogate che imita il modello target — permette di capire la logica e costruire attacchi più sofisticati.</li>
+    <li><strong>Backdoor</strong>: accesso non autorizzato al sistema; più difficile da rilevare nei sistemi AI a causa dell'opacità.</li>
+    <li><strong>Adversarial examples</strong>: input progettati per far fare errori al modello.</li>
+  </ul>
+</div>
+<div class="theory-section">
+  <h2>🔒 Obblighi Cybersecurity AI Act (Art. 15)</h2>
+  <p>I sistemi AI ad alto rischio devono essere progettati e sviluppati per raggiungere un <strong>livello adeguato di accuratezza, robustezza e cybersecurity</strong> durante l'intero ciclo di vita. Devono essere resilienti rispetto ai tentativi di terze parti non autorizzate di alterarne uso, output o performance.</p>
+  <p>Le soluzioni tecniche per affrontare le vulnerabilità AI-specifiche devono includere misure per prevenire, rilevare, rispondere, risolvere e controllare: data poisoning, model poisoning, adversarial examples, model evasion, confidentiality attacks, model flaws.</p>
+  <div class="key-box"><div class="key-label">Dimostrazione della Conformità</div><p>Two options: (a) conformità agli standard armonizzati (presunzione di conformità); (b) dimostrazione alternativa senza standard armonizzati. Art. 42(2): sistemi AI certificati sotto uno schema di cybersecurity (Cybersecurity Act) si presumono conformi all'Art. 15.</p></div>
+</div>`,
+    quiz: [
+      { q:"Cosa si intende per 'data poisoning' in un attacco AI?", opts:["Cifrare i dati di output del modello AI","Modificare il comportamento del modello AI alterando i dataset di training","Intercettare i dati trasmessi dal sistema AI","Rubare il modello AI per creare una copia"], correct:1, exp:"Il data poisoning è un attacco che mira a modificare il comportamento del modello AI alterando i dataset di training. Il caso Tay (Microsoft, 2016) è l'esempio più famoso: utenti inviavano messaggi offensivi per avvelenare i dati di apprendimento del chatbot, rendendolo offensivo." },
+      { q:"Cosa caratterizza un 'evasion attack' contro un sistema AI?", opts:["L'attaccante sostituisce il modello AI con uno falso","L'attaccante modifica i dati di input (anche impercettibilmente) per far classificare erroneamente l'input al modello","L'attaccante ruba il dataset di training","L'attaccante blocca l'accesso al sistema AI"], correct:1, exp:"Un evasion attack è quando l'attaccante modifica i dati di input, a volte in modo impercettibile, perché il modello AI non classifichi correttamente l'input e produca output errati. Esempio: stickers su segnali stradali 'Stop' che fanno credere ai veicoli autonomi di vedere segnali di velocità." },
+      { q:"Quali sono le caratteristiche chiave che definiscono un 'AI system' secondo l'Art. 3 AI Act?", opts:["Deve essere un robot fisico","Inferenza, autonomia e adattività (machine-based system che inferisce come generare output)","Solo machine learning profondo (deep learning)","Deve avere più di 1 miliardo di parametri"], correct:1, exp:"Art. 3 AI Act: un AI system è un sistema machine-based progettato per operare con vari livelli di autonomia, che può mostrare adattività dopo il deployment, e che per obiettivi espliciti o impliciti, inferisce dagli input come generare output. Le tre caratteristiche chiave sono: inferenza (capacità di derivare output dagli input), autonomia (grado di indipendenza dall'intervento umano), adattività (auto-apprendimento)." },
+      { q:"Come può un provider di un sistema AI ad alto rischio dimostrare la conformità agli obblighi di cybersecurity (Art. 15)?", opts:["Solo attraverso audit dell'Autorità nazionale competente","Solo tramite certificazione da parte di enti accreditati","Conformità agli standard armonizzati (presunzione di conformità) oppure dimostrazione alternativa; la certificazione sotto lo schema di cybersecurity del Cybersecurity Act è sufficiente","La conformità non deve essere dimostrata, ma solo dichiarata dal provider"], correct:2, exp:"Art. 15 e 42(2) AI Act: due opzioni per dimostrare la conformità cybersecurity: (1) conformità agli standard armonizzati (Recital 61, Art. 40) — fornisce presunzione di conformità; (2) dimostrazione alternativa senza standard armonizzati (gli standard sono volontari). Inoltre, Art. 42(2): sistemi AI certificati sotto uno schema di cybersecurity ai sensi del Cybersecurity Act (2019/881) si presumono conformi all'Art. 15 nella misura in cui il certificato copre quei requisiti." }
+    ],
+    articles: [
+      { ref:"Art. 15 AI Act – Accuratezza, Robustezza e Cybersecurity", prompt:"Spiega Art. 15 AI Act: cosa richiede per i sistemi AI ad alto rischio riguardo alla cybersecurity e come si dimostra la conformità.", answer:"<strong>Art. 15 AI Act</strong>: i sistemi AI ad alto rischio devono essere progettati e sviluppati per raggiungere un livello adeguato di accuratezza, robustezza e cybersecurity, e mantenere tali proprietà durante l'intero ciclo di vita. Devono essere resilienti rispetto ai tentativi di alterarne uso, output o performance da parte di terze parti non autorizzate. <strong>Soluzioni tecniche specifiche</strong> per vulnerabilità AI devono includere misure per: prevenire, rilevare, rispondere, risolvere e controllare attacchi di data poisoning, model poisoning, adversarial examples/model evasion, confidentiality attacks, model flaws. <strong>Dimostrazione della conformità (Art. 42(2))</strong>: i sistemi AI certificati sotto uno schema di cybersecurity (Cybersecurity Act 2019/881) si presumono conformi all'Art. 15 nella misura in cui il certificato copre quei requisiti. Altrimenti: conformità agli standard armonizzati o dimostrazione alternativa. La responsabilità rimane sempre del provider." }
+    ]
+  },
+  {
+    id: 20,
+    title: "Cybersecurity & Mis/Disinformazione",
+    tag: "cyber", tagLabel: "Cybersecurity",
+    desc: "Tipi di information disorder, manipolazione dell'informazione come minaccia cyber, DSA e strumenti di mitigazione.",
+    xp: 80,
+    theory: `
+<div class="theory-section">
+  <h2>📰 Tipi di Information Disorder</h2>
+  <ul>
+    <li><strong>Misinformation</strong>: informazione falsa condivisa <em>senza intenzione di ingannare</em> (accidentale, per informazioni obsolete o mistraduzione)</li>
+    <li><strong>Disinformation</strong>: informazione falsa diffusa <em>volontariamente per ingannare</em>. È solitamente basata su propaganda computazionale accuratamente progettata</li>
+    <li><strong>Malinformation</strong>: informazione anche vera ma usata per danneggiare qualcuno (hate speech, promozione della violenza, leak)</li>
+  </ul>
+  <div class="key-box"><div class="key-label">Perché "Information Manipulation"?</div><p>ENISA preferisce "information manipulation" a "disinformation" perché enfatizza il comportamento manipolativo intenzionale piuttosto che la veridicità del contenuto. Questo è più coerente con le altre categorie di minacce nel ENISA Threat Landscape (ETL).</p></div>
+</div>
+<div class="theory-section">
+  <h2>🛡️ È una Minaccia Cyber?</h2>
+  <p>ENISA (ETL 2024): la manipolazione dell'informazione dovrebbe essere considerata una <strong>minaccia di cybersecurity</strong> perché: (1) influisce direttamente sull'<strong>INTEGRITÀ</strong> dell'informazione; (2) operazioni di hack-and-leak impattano sulla <strong>CONFIDENZIALITÀ</strong>; (3) le operazioni di IM sfruttano e abusano spesso altri principi di cybersecurity (autenticità, accountability) e tecniche, tattiche e procedure di cybersecurity.</p>
+</div>
+<div class="theory-section">
+  <h2>⚖️ DSA come Strumento (Regulation 2022/2065)</h2>
+  <p>Il DSA non definisce "disinformazione" ma le VLOPs e VLOSEs devono: (1) valutare i <strong>rischi sistemici</strong> (Art. 34) derivanti dal design, operazione e uso dei loro servizi, incluso il rischio di impatto negativo su processi democratici e discorso civico; (2) adottare <strong>misure di mitigazione</strong> (Art. 35).</p>
+  <p>La disinformazione può qualificarsi come "rischio sistemico" se riguarda impatti negativi su processi democratici/discorso civico/sicurezza pubblica o salute pubblica/minori/violenza di genere.</p>
+  <div class="key-box"><div class="key-label">Strumenti di Mitigazione</div><p>Code of Practice on Disinformation; Guidelines for VLOPs & Search Engines on Mitigation of Systemic Risks for Electoral Processes.</p></div>
+</div>`,
+    quiz: [
+      { q:"Qual è la differenza principale tra misinformation e disinformation?", opts:["Misinformation riguarda solo le notizie politiche, disinformation tutte le notizie","Misinformation manca dell'intenzione di ingannare (accidentale), disinformation è deliberatamente progettata per ingannare","Misinformation è più pericolosa della disinformation","Non c'è differenza, sono sinonimi"], correct:1, exp:"Misinformation è informazione falsa condivisa SENZA intenzione di ingannare (errori accidentali, informazioni obsolete, mistranslations). Disinformation è deliberatamente progettata per ingannare, spesso basata su propaganda computazionale accuratamente costruita. La differenza chiave è l'INTENZIONALITÀ." },
+      { q:"Perché ENISA considera la manipolazione dell'informazione una minaccia di cybersecurity?", opts:["Perché non è possibile regolarla in altro modo","Perché influisce sull'INTEGRITÀ dell'informazione (uno dei tre componenti CIA) e sfrutta tattiche, tecniche e procedure di cybersecurity","Perché avviene solo attraverso attacchi hacker","Perché è definita come tale nel GDPR"], correct:1, exp:"ENISA (ETL 2024) considera la manipolazione dell'informazione una minaccia cyber perché: (1) influisce direttamente sull'INTEGRITÀ dell'informazione (componente CIA); (2) le operazioni di hack-and-leak impattano sulla CONFIDENZIALITÀ; (3) le operazioni IM sfruttano e abusano di principi di cybersecurity (autenticità, accountability) e di tecniche, tattiche e procedure cyber." },
+      { q:"Come tratta il Digital Services Act (DSA) la disinformazione?", opts:["La definisce e la vieta esplicitamente","Non ha nessuna disposizione sulla disinformazione","Non definisce 'disinformazione' ma le VLOPs/VLOSEs devono valutare i rischi sistemici (Art. 34) e adottare misure di mitigazione (Art. 35)","La reindirizza alle autorità penali per ogni violazione"], correct:2, exp:"Il DSA non definisce 'disinformazione', ma le Very Large Online Platforms (VLOPs) e Very Large Online Search Engines (VLOSEs) hanno due obblighi chiave: (1) Art. 34: valutare i rischi sistemici derivanti dal design e uso dei loro servizi, incluso il rischio di impatto negativo su processi democratici, discorso civico, sicurezza pubblica; (2) Art. 35: adottare misure di mitigazione dei rischi sistemici identificati." }
+    ],
+    articles: [
+      { ref:"Art. 34 & 35 DSA – Risk Assessment e Mitigazione dei Rischi Sistemici", prompt:"Spiega Art. 34 e Art. 35 DSA in relazione alla disinformazione: a chi si applicano, cosa richiedono e come si collega alla cybersecurity.", answer:"<strong>Art. 34 DSA – Risk Assessment</strong>: si applica alle VLOPs (Very Large Online Platforms) e VLOSEs (Very Large Online Search Engines). Queste devono identificare, analizzare e valutare i rischi sistemici derivanti dal design, operazione, uso dei loro servizi, incluso: (a) impatti negativi su processi democratici, discorso civico, sicurezza pubblica; (b) impatti negativi su salute pubblica, protezione dei minori, violenza di genere. Il risk assessment analizza anche se i rischi sono influenzati da manipolazione intenzionale (inauthentic use, automated exploitation). <strong>Art. 35 DSA – Misure di Mitigazione</strong>: le VLOPs/VLOSEs adottano misure proporzionate per mitigare i rischi sistemici identificati. <strong>Collegamento cybersecurity</strong>: la disinformazione diventa una minaccia cyber quando viene distribuita attraverso tatiche cyber (social engineering, hack-and-leak) o influisce sull'integrità dell'informazione. Strumenti di mitigazione: Code of Practice on Disinformation, Guidelines per Electoral Processes." }
+    ]
+  }
+];
+
+// =====================================================
+// RENDER CHAPTERS
+// =====================================================
+function renderChapters() {
+  const grid = document.getElementById('chapters-grid');
+  grid.innerHTML = '';
+  chapters.forEach(ch => {
+    const prog = state.chapterProgress[ch.id] || {};
+    const pct = prog.quizDone ? 100 : (prog.quizStarted ? 50 : 0);
+    const tagClass = {gdpr:'tag-gdpr',cyber:'tag-cyber',ai:'tag-ai'}[ch.tag];
+    grid.innerHTML += `
+    <div class="chapter-card" onclick="openChapter(${ch.id})">
+      <div class="ch-num">CAP. ${ch.id < 10 ? '0'+ch.id : ch.id}</div>
+      <h3>${ch.title}</h3>
+      <p>${ch.desc}</p>
+      <div class="ch-footer">
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="chapter-tag ${tagClass}">${ch.tagLabel}</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="ch-xp">⚡ ${ch.xp} XP</span>
+          <div class="ch-arrow">${prog.quizDone ? '✅' : '→'}</div>
+        </div>
+      </div>
+      <div class="ch-progress"><div class="ch-progress-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  });
+}
+
+// =====================================================
+// OPEN CHAPTER
+// =====================================================
+let currentChapter = null;
+function openChapter(id) {
+  currentChapter = chapters.find(c => c.id === id);
+  if(!currentChapter) return;
+
+  const tagClass = {gdpr:'tag-gdpr',cyber:'tag-cyber',ai:'tag-ai'}[currentChapter.tag];
+  document.getElementById('ch-tag').innerHTML = `<span class="chapter-tag ${tagClass}">${currentChapter.tagLabel}</span>`;
+  document.getElementById('ch-title').textContent = currentChapter.title;
+  document.getElementById('ch-desc').textContent = currentChapter.desc;
+
+  // Render theory
+  document.getElementById('tab-theory').innerHTML = currentChapter.theory;
+
+  // Render quiz
+  renderQuiz(currentChapter);
+
+  // Render articles
+  renderArticles(currentChapter);
+
+  // Reset tabs
+  document.querySelectorAll('.content-tab').forEach((t,i) => t.classList.toggle('active', i===0));
+  document.getElementById('tab-theory').classList.add('active');
+  document.getElementById('tab-quiz').classList.remove('active');
+  document.getElementById('tab-articles').classList.remove('active');
+
+  showPage('chapter-detail');
+}
+
+// =====================================================
+// QUIZ
+// =====================================================
+let quizState = { idx:0, score:0, answered:false, combo:0 };
+
+function renderQuiz(ch) {
+  const container = document.getElementById('tab-quiz');
+  container.innerHTML = `
+  <div class="quiz-intro">
+    <h2>🧠 Quiz: ${ch.title}</h2>
+    <p>${ch.quiz.length} domande · Rispondi correttamente per guadagnare XP e mantenere il tuo streak!</p>
+    <button class="start-btn" onclick="startQuiz()">🚀 Inizia Quiz</button>
+  </div>
+  <div class="quiz-container" id="quiz-main">
+    <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="q-prog" style="width:0%"></div></div>
+    <div class="quiz-q-num" id="q-num"></div>
+    <div class="quiz-question" id="q-text"></div>
+    <div class="quiz-options" id="q-opts"></div>
+    <div class="quiz-feedback" id="q-fb"></div>
+    <div class="quiz-nav">
+      <div class="combo-display" id="q-combo"></div>
+      <button class="next-btn" id="q-next" onclick="nextQuestion()">Prossima →</button>
+    </div>
+  </div>
+  <div class="score-display" id="quiz-score">
+    <h2>🎉 Quiz Completato!</h2>
+    <div class="big-score" id="final-score-txt"></div>
+    <div class="xp-earned" id="xp-earned-txt"></div>
+    <button class="start-btn" onclick="startQuiz()">🔄 Riprova</button>
+  </div>`;
+}
+
+function startQuiz() {
+  quizState = { idx:0, score:0, answered:false, combo: quizState.combo||0 };
+  document.querySelector('.quiz-intro').style.display='none';
+  document.getElementById('quiz-main').classList.add('active');
+  document.getElementById('quiz-score').style.display='none';
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = currentChapter.quiz[quizState.idx];
+  const total = currentChapter.quiz.length;
+  document.getElementById('q-prog').style.width = ((quizState.idx/total)*100)+'%';
+  document.getElementById('q-num').textContent = `Domanda ${quizState.idx+1} di ${total}`;
+  document.getElementById('q-text').textContent = q.q;
+  document.getElementById('q-fb').style.display='none';
+  document.getElementById('q-next').style.display='none';
+  quizState.answered = false;
+
+  const letters = ['A','B','C','D'];
+  document.getElementById('q-opts').innerHTML = q.opts.map((opt,i) => `
+    <button class="quiz-opt" onclick="answerQuestion(${i})">
+      <div class="opt-letter">${letters[i]}</div>
+      ${opt}
+    </button>`).join('');
+
+  document.getElementById('q-combo').textContent = quizState.combo > 1 ? `🔥 Combo x${quizState.combo}!` : '';
+}
+
+function answerQuestion(idx) {
+  if(quizState.answered) return;
+  quizState.answered = true;
+  const q = currentChapter.quiz[quizState.idx];
+  const opts = document.querySelectorAll('.quiz-opt');
+  opts.forEach(o => o.classList.add('disabled'));
+
+  const correct = idx === q.correct;
+  opts[idx].classList.add(correct ? 'correct' : 'wrong');
+  opts[q.correct].classList.add('correct');
+
+  const fb = document.getElementById('q-fb');
+  fb.style.display='block';
+  fb.className = 'quiz-feedback' + (correct ? '' : ' wrong-fb');
+  fb.innerHTML = `<div class="fb-title">${correct ? '✅ Corretto!' : '❌ Non esatto'}</div><p>${q.exp}</p>`;
+
+  if(correct) {
+    quizState.score++;
+    quizState.combo++;
+    state.correct++;
+    state.streak = Math.max(state.streak||0, quizState.combo);
+    const xpGain = correct ? (quizState.combo >= 3 ? 15 : 10) : 0;
+    addXP(xpGain);
+    if(quizState.combo === 3) showToast('🔥','Combo x3!','Sei in fiamma! +15 XP bonus','var(--accent4)');
+  } else {
+    quizState.combo = 0;
+    state.streak = 0;
+  }
+  state.total++;
+  saveState();
+  document.getElementById('q-next').style.display='block';
+  document.getElementById('q-combo').textContent = quizState.combo > 1 ? `🔥 Combo x${quizState.combo}!` : '';
+}
+
+function nextQuestion() {
+  quizState.idx++;
+  if(quizState.idx >= currentChapter.quiz.length) {
+    finishQuiz();
+  } else {
+    showQuestion();
+  }
+}
+
+function finishQuiz() {
+  document.getElementById('quiz-main').classList.remove('active');
+  document.getElementById('quiz-score').style.display='block';
+  const pct = Math.round((quizState.score / currentChapter.quiz.length) * 100);
+  document.getElementById('final-score-txt').textContent = `${quizState.score}/${currentChapter.quiz.length}`;
+  const xpTotal = quizState.score * 10;
+  document.getElementById('xp-earned-txt').innerHTML = `⚡ +${xpTotal} XP guadagnati`;
+
+  if(!state.chapterProgress[currentChapter.id]) state.chapterProgress[currentChapter.id] = {};
+  state.chapterProgress[currentChapter.id].quizDone = true;
+  state.chapterProgress[currentChapter.id].score = pct;
+  saveState();
+  checkAchievements();
+  renderChapters();
+  updateStats();
+
+  if(pct === 100) showToast('🏆','Perfetto!','Hai risposto correttamente a tutte le domande!','var(--gold)');
+  else if(pct >= 80) showToast('⭐','Ottimo!',`${pct}% corretto!`,'var(--accent3)');
+  else showToast('💪','Continua ad allenare!',`${pct}% — riprova per migliorare`,'var(--accent)');
+}
+
+// =====================================================
+// ARTICLES CHALLENGE
+// =====================================================
+let articleState = { idx:0 };
+
+function renderArticles(ch) {
+  const container = document.getElementById('tab-articles');
+  const articles = ch.articles;
+  container.innerHTML = `
+  <div class="ac-intro">
+    <h2>⚖️ Sfida Articoli</h2>
+    <p>Ogni articolo ha un numero e un titolo. Scrivi la tua spiegazione, poi controlla la risposta modello. Valuta onestamente il tuo apprendimento!</p>
+  </div>
+  ${articles.map((a,i) => `
+  <div class="ac-card ${i===0?'active':''}" id="ac-${i}">
+    <div class="ac-article-ref">${a.ref}</div>
+    <div class="ac-prompt">${a.prompt}</div>
+    <div class="ac-hint">💡 Scrivi la tua risposta prima di vedere quella modello</div>
+    <textarea class="ac-input" placeholder="Scrivi qui la tua spiegazione..." id="ac-input-${i}"></textarea>
+    <div class="ac-btns">
+      <button class="reveal-btn" onclick="revealAnswer(${i})">👁️ Mostra Risposta Modello</button>
+      ${i < articles.length-1 ? `<button class="reveal-btn" onclick="nextArticle(${i})">Prossimo Articolo →</button>` : ''}
+    </div>
+    <div class="ac-answer" id="ac-ans-${i}">
+      <div class="ans-title">✅ Risposta Modello</div>
+      <p>${a.answer}</p>
+    </div>
+    <div class="self-rate" id="ac-rate-${i}">
+      <p>Come ti sei valutato?</p>
+      <div class="rate-btns">
+        <button class="rate-btn good" onclick="rateAnswer(${i},'good')">✅ Lo sapevo!</button>
+        <button class="rate-btn ok" onclick="rateAnswer(${i},'ok')">🤔 Quasi...</button>
+        <button class="rate-btn bad" onclick="rateAnswer(${i},'bad')">❌ Non lo sapevo</button>
+      </div>
+    </div>
+  </div>`).join('')}`;
+}
+
+function revealAnswer(i) {
+  document.getElementById(`ac-ans-${i}`).style.display='block';
+  document.getElementById(`ac-rate-${i}`).style.display='block';
+}
+
+function nextArticle(i) {
+  document.getElementById(`ac-${i}`).classList.remove('active');
+  document.getElementById(`ac-${i+1}`).classList.add('active');
+}
+
+function rateAnswer(i, rating) {
+  const xp = {good:15, ok:8, bad:3}[rating];
+  addXP(xp);
+  const msgs = {good:'Ottimo! +15 XP', ok:'Quasi! +8 XP', bad:'Non ti preoccupare! +3 XP — rileggi la teoria'};
+  showToast('⚖️','Articolo Valutato',msgs[rating]);
+  document.getElementById(`ac-rate-${i}`).innerHTML = `<p style="color:var(--accent3)">✅ Valutazione registrata! +${xp} XP</p>`;
+}
+
+// =====================================================
+// TABS
+// =====================================================
+function switchTab(name) {
+  document.querySelectorAll('.content-tab').forEach((t,i) => {
+    const names = ['theory','quiz','articles'];
+    t.classList.toggle('active', names[i] === name);
+  });
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.getElementById(`tab-${name}`).classList.add('active');
+}
+
+// =====================================================
+// PROGRESS PAGE
+// =====================================================
+function renderProgressPage() {
+  const grid = document.getElementById('progress-grid');
+  grid.innerHTML = chapters.map(ch => {
+    const prog = state.chapterProgress[ch.id] || {};
+    return `
+    <div class="progress-ch">
+      <div class="pch-name">${ch.title}</div>
+      <div class="pch-stats">
+        <div class="pstat"><div class="n ${prog.quizDone?'green':'purple'}">${prog.score||0}%</div><div class="l">Quiz Score</div></div>
+        <div class="pstat"><div class="n purple">${ch.xp}</div><div class="l">Max XP</div></div>
+      </div>
+      <div class="ch-progress"><div class="ch-progress-fill" style="width:${prog.quizDone?100:0}%"></div></div>
+    </div>`;
+  }).join('');
+
+  renderAchievements();
+}
+
+const achievementsList = [
+  { id:'first_quiz', icon:'🎯', name:'Prima Sfida', desc:'Completa il tuo primo quiz' },
+  { id:'streak3', icon:'🔥', name:'On Fire!', desc:'Raggiungi una combo x3' },
+  { id:'perfect', icon:'💯', name:'Perfezionista', desc:'100% in un quiz' },
+  { id:'five_chapters', icon:'📚', name:'Studente', desc:'Completa 5 capitoli' },
+  { id:'all_gdpr', icon:'⚖️', name:'GDPR Master', desc:'Completa tutti i capitoli GDPR' },
+  { id:'cybersec', icon:'🛡️', name:'Cyber Defender', desc:'Completa tutti i capitoli Cyber' },
+  { id:'xp500', icon:'⚡', name:'Energy Drink', desc:'Raggiungi 500 XP' },
+  { id:'xp2000', icon:'🚀', name:'Expert', desc:'Raggiungi 2000 XP' },
+];
+
+function checkAchievements() {
+  const done = Object.values(state.chapterProgress).filter(p => p.quizDone).length;
+  const gdprDone = chapters.filter(c => c.tag==='gdpr').every(c => state.chapterProgress[c.id]?.quizDone);
+  const cyberDone = chapters.filter(c => c.tag==='cyber').every(c => state.chapterProgress[c.id]?.quizDone);
+  const perfect = Object.values(state.chapterProgress).some(p => p.score === 100);
+
+  if(done >= 1 && !state.achievements.first_quiz) { state.achievements.first_quiz=true; showToast('🎯','Achievement!','Prima Sfida completata!','var(--gold)'); }
+  if(state.streak >= 3 && !state.achievements.streak3) { state.achievements.streak3=true; showToast('🔥','Achievement!','On Fire! Combo x3','var(--gold)'); }
+  if(perfect && !state.achievements.perfect) { state.achievements.perfect=true; showToast('💯','Achievement!','Perfezionista! 100% corretto','var(--gold)'); }
+  if(done >= 5 && !state.achievements.five_chapters) { state.achievements.five_chapters=true; showToast('📚','Achievement!','Studente — 5 capitoli completati','var(--gold)'); }
+  if(gdprDone && !state.achievements.all_gdpr) { state.achievements.all_gdpr=true; showToast('⚖️','Achievement!','GDPR Master!','var(--gold)'); }
+  if(cyberDone && !state.achievements.cybersec) { state.achievements.cybersec=true; showToast('🛡️','Achievement!','Cyber Defender!','var(--gold)'); }
+  if(state.xp >= 500 && !state.achievements.xp500) { state.achievements.xp500=true; showToast('⚡','Achievement!','Energy Drink — 500 XP','var(--gold)'); }
+  if(state.xp >= 2000 && !state.achievements.xp2000) { state.achievements.xp2000=true; showToast('🚀','Achievement!','Expert — 2000 XP','var(--gold)'); }
+  saveState();
+}
+
+function renderAchievements() {
+  document.getElementById('achievements-grid').innerHTML = achievementsList.map(a => `
+    <div class="achievement ${state.achievements[a.id]?'unlocked':''}">
+      <div class="ach-icon">${a.icon}</div>
+      <div class="ach-name">${a.name}</div>
+      <div class="ach-desc">${a.desc}</div>
+    </div>`).join('');
+}
+
+// =====================================================
+// PAGE NAVIGATION
+// =====================================================
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-pill').forEach(p => p.classList.toggle('active', p.dataset.page === id));
+
+  if(id === 'progress-page') renderProgressPage();
+  if(id === 'home') renderChapters();
+}
+
+// =====================================================
+// INIT
+// =====================================================
+updateXPBar();
+updateStats();
+renderChapters();
+</script>
+</body>
+</html>
